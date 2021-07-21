@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[SQL创建计算字段]]></title>
-    <url>%2F2021%2F07%2F21%2FSQL%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5%2F</url>
-    <content type="text"><![CDATA[## 计算字段 字段(field)基本上与列(column)的意思相同，经常互换使用，不过数据库列一般称为列，而属于字段通常与计算字段一起使用。 &lt;!–￼0–&gt; ## 拼接字段 拼接(concatenate)将值联结到一起(将一个值附加到另一个值)构成单个值。 Access和SQL Server使用+号。DB2、Oracle、PostgreSQL、SQLite和Open Office Base使用||。在MySQL和MariaDB中，必须使用特殊的函数。 许多数据库保存填充为列宽的文本值，而实际上你要的结果不需要这些空格。 大多数DBMS都支持RTRIM()去掉字符串右边的空格、LTRIM()去掉字符串左边的空格、TRIM()去掉字符串左右两边的空格。 &lt;!–￼1–&gt; ## 执行算术计算 &lt;!–￼2–&gt;]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL必知必会</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[SQL通配符过滤]]></title>
-    <url>%2F2021%2F07%2F21%2FSQL%E9%80%9A%E9%85%8D%E7%AC%A6%E8%BF%87%E6%BB%A4%2F</url>
-    <content type="text"><![CDATA[# 用通配符进行过滤 通配符(wildcard) 用来匹配值的一部分的特殊字符。 搜索模式(search pattern)由字面值、通配符或两者组合构成的搜索条件。 谓词(predicate)操作符在做谓词时不是操作符。技术上说，LIKE是谓词而不是操作符。 %通配符表示任何字符出现任意次数，在Access中使用*而不是%。 _通配符与%一样，但它只能匹配单个字符，不能多也不能少。DB2不支持通配符_，Access需要使用?而不是_。 &lt;!–￼0–&gt;]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL必知必会</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[修改已提交到github的用户名和邮箱]]></title>
     <url>%2F2021%2F07%2F21%2F%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1%2F</url>
-    <content type="text"><![CDATA[背景最近在家用的是老婆的电脑，经常在提交代码的时候发现author是她的名字。由此引出今天的问题 方案查询诸多资料，有推荐使用 1git rebase -i HEAD~n // n为提交次数 但是对我而言行不通，可能是因为只有一次提交的原因。 经过不断尝试，最终找到解决方案如下 1. 查找提交记录12345678910git log``` ![git log](_v_images/20210721220239960_21106.png)### 2. 复制要修改的提交记录id ### 3. 进入提交记录 ``` SHELLgit reset --soft 9731ab6xxx 4. 修改用户信息1git commit --amend --author='yourname &lt;youremail@email.com&gt;' 5. 退出编辑，vim使用:q退出6. 提交、1git push origin --force --all 问题到这里就修复了。]]></content>
+    <content type="text"><![CDATA[背景最近在家用的是老婆的电脑，经常在提交代码的时候发现author是她的名字。由此引出今天的问题 方案查询诸多资料，有推荐使用 1git rebase -i HEAD~n // n为提交次数 但是对我而言行不通，可能是因为只有一次提交的原因。 经过不断尝试，最终找到解决方案如下 1. 查找提交记录1git log 2. 复制要修改的提交记录id3. 进入提交记录1git reset --soft 9731ab6xxx 4. 修改用户信息1git commit --amend --author='yourname &lt;youremail@email.com&gt;' 5. 退出编辑，vim使用:q退出6. 提交、1git push origin --force --all 问题到这里就修复了。]]></content>
       <categories>
         <category>github</category>
       </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[如此生活三十年]]></title>
-    <url>%2F2020%2F10%2F09%2F%E5%A6%82%E6%AD%A4%E7%94%9F%E6%B4%BB%E4%B8%89%E5%8D%81%E5%B9%B4%2F</url>
-    <content type="text"><![CDATA[浑浑噩噩生活了近三十年了，]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F08%2F18%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
