@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL通配符过滤 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL通配符过滤" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL通配符过滤
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL通配符过滤/" class="article-date">
+  <time datetime="2021-07-21T15:26:18.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p><strong>通配符</strong>(wildcard) 用来匹配值的一部分的特殊字符。  </p>
+<p><strong>搜索模式</strong>(search pattern)由字面值、通配符或两者组合构成的搜索条件。  </p>
+<p><strong>谓词</strong>(predicate)操作符在做谓词时不是操作符。技术上说，LIKE是谓词而不是操作符。  </p>
+<p>%通配符表示任何字符出现任意次数，在Access中使用*而不是%。  </p>
+<p>_通配符与%一样，但它只能匹配单个字符，不能多也不能少。DB2不支持通配符_，Access需要使用?而不是_。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- WILDCARD FILTER</span></span><br><span class="line"><span class="comment">-- LIKE OPERATOR</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- % WILDCARD</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">'Fish%'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">'%bean bag%'</span>; <span class="comment">--Access使用*而不是%</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> prod_name <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">'F%y'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- _ WILDCARD</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">'__ inch teddy bear'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">'% inch teddy bear'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- [] 通配符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_contact <span class="keyword">LIKE</span> <span class="string">'[JM]%'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_contact;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_contact <span class="keyword">LIKE</span> <span class="string">' (JM)%'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_contact;  <span class="comment">-- 否定，Access中使用!而不是^</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> <span class="keyword">NOT</span> cust_contact <span class="keyword">LIKE</span> <span class="string">'[JM]%'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_contact;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL通配符过滤/" data-id="ckrdnund1001750i4ir7iy84g"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/07/21/SQL插入数据/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL插入数据</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

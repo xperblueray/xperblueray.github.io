@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL使用子查询 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL使用子查询" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL使用子查询
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL使用子查询/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p><strong>查询</strong>（query）任何SQL语句都是查询。但此术语一般指SELECT语句。<br>SQL还允许创建子查询（subquery），即嵌套在其它查询中的查询。</p>
+<h2 id="利用子查询进行过滤"><a href="#利用子查询进行过滤" class="headerlink" title="利用子查询进行过滤"></a>利用子查询进行过滤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FILTER BY SUBQUERY</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> cust_id <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> cust_id <span class="keyword">in</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> cust_id <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">	)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>作为子查询的SELECT语句只能查询单个列。企图检索多个列将返回错误。</p>
+</blockquote>
+<h2 id="作为计算字段使用子查询"><a href="#作为计算字段使用子查询" class="headerlink" title="作为计算字段使用子查询"></a>作为计算字段使用子查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- USE SUBQUERY AS CALCULATE FIELD</span></span><br><span class="line"><span class="keyword">SELECT</span> *, (<span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">FROM</span> orders o <span class="keyword">WHERE</span> o.cust_id = c.cust_id) <span class="keyword">AS</span> cust_order_num <span class="keyword">FROM</span> customers c; <span class="comment">-- DIY</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_state, (<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> Orders.cust_id = Customers.cust_id) <span class="keyword">AS</span> orders <span class="keyword">FROM</span> Customers <span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_name;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL使用子查询/" data-id="ckrdnunc4000950i49y1ugnxd"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/SQL创建和操纵表/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SQL创建和操纵表
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/SQL创建计算字段/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL创建计算字段</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

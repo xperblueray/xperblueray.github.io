@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL管理事务处理 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL管理事务处理" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL管理事务处理
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL管理事务处理/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>介绍事务处理，以及如何利用COMMIT和ROLLBACK语句管理事务处理。</p>
+<h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><p>使用<strong>事务处理</strong>（transaction processing），通过确保成批的SQL操作要么完全执行，要么完全不执行，来维护数据的完整性。<br>事务处理是一种机制，用来管理必须成批执行的SQL操作，保证数据库不包含不完整的操作结果。<br>事务处理的几个术语：</p>
+<ul>
+<li><strong>事务</strong>（tranction）指一组SQL语句</li>
+<li><strong>回退</strong>（rollback）指撤销指定SQL语句的过程</li>
+<li><strong>提交</strong>（commit）指将未存储的SQL语句结果写入数据库表</li>
+<li><strong>保留点</strong>（savepoint）指四和五处理中设置的<strong>临时占位符</strong>（placeholder）,可以对他发布回退（与回退整个事务处理不同）</li>
+</ul>
+<p>可以回退哪些语句<br>事务处理用来管理INSERT、UPDATE和DELTE语句。不能回退SELECT语句（回退SELECT语句也没必要），也不能回退CREATE和DROP操作。事务处理中可以使用这些语句，但进行回退时，这些操作也不能撤销。</p>
+<h2 id="控制事务处理"><a href="#控制事务处理" class="headerlink" title="控制事务处理"></a>控制事务处理</h2><p>管理事务的关键在于将SQL语句组分解为逻辑块，并明确规定数据合适应该回退，合适不应该回退。<br>有的DBMS要求明确表示事务处理块的开始和结束。<br>在SQL Server中，标识如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br></pre></td></tr></table></figure>
+
+<p>在BEGIN TRANSACTION和COMMIT TRANSACTION语句之间的SQL必须完全执行或者完全不执行。<br>在MariaDB和MySQL中等同的代码：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STRAT TRANSACTION</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>在Oracle使用的语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">TRANSACTION</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>在PostgreSQL使用ANSI SQL语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用ROLLBACK"><a href="#使用ROLLBACK" class="headerlink" title="使用ROLLBACK"></a>使用ROLLBACK</h3><p>SQL的ROLLBACK命令用来回退（撤销）SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ROLLBACK</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> Orders;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用COMMIT"><a href="#使用COMMIT" class="headerlink" title="使用COMMIT"></a>使用COMMIT</h3><p>一般的SQL语句都是针对数据库表直接执行和编写的。就是所谓的<strong>隐式提交</strong>（implicit commit），即提交（写或保存）操作是自动进行的。<br>在事务处理模块中，提交不会隐式进行。<br>进行明确的提交，使用COMMIT语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- COMMIT</span></span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">DELETE</span> OrderItems <span class="keyword">WHERE</span> order_num = <span class="number">12345</span></span><br><span class="line"><span class="keyword">DELETE</span> Orders <span class="keyword">WHERE</span> order_num =<span class="number">12345</span></span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span>       <span class="comment">-- SQL Server</span></span><br><span class="line"><span class="comment">### 使用保留点</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">DELETE</span> OrderItems <span class="keyword">WHERE</span> order_num = <span class="number">12345</span>;</span><br><span class="line">DELELE Orders WHERE order_num = 12345;</span><br><span class="line"><span class="keyword">COMMIT</span>;  <span class="comment">-- Oracle</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用保留点"><a href="#使用保留点" class="headerlink" title="使用保留点"></a>使用保留点</h3><p>使用简单的ROLLBACK和COMMIT语句，就可以写入或撤销整个事务。倒是，只对简单的事务才能这样做，复杂的事务可能需要部分提交或回退。<br>要支持回退部分事务，必须在事务处理块中的合适位置放置占位符。<br>在SQL中，这些占位符称为保留点。<br>在MariaDB、MySQL和Oracle中创建占位符，可使用SAVEPOINT语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SAVEPOINT</span> delete1;</span><br></pre></td></tr></table></figure>
+
+<p>在SQL Server中，如下进行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAVE TRANSACTION delte1;</span><br></pre></td></tr></table></figure>
+
+<p>每个保留点都要取能够标识它的唯一名字，以便在回退时，DBMS知道回退到何处。<br>在SQL Server中，可如下进行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TRANSACTION</span> delete1;  <span class="comment">-- SQL Server ROLLBACK TO SAVEPOINT</span></span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> delete1;  <span class="comment">-- Maria MySQL AND Oracle ROLLBACK TO PLACEHOLDER</span></span><br></pre></td></tr></table></figure>
+
+<p>一个完整的SQL Server例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FULL ROLLBACK OF SQL Server</span></span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id, cust_name)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">'1000000010'</span>, <span class="string">'Toys Emporium'</span>);</span><br><span class="line">SAVE TRANSACTION StartOrder;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">Order</span>(order_num, order_date, cust_id)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">20100</span>, <span class="string">'2001/12/1'</span>, <span class="string">'1000000010'</span>);</span><br><span class="line">IF @@ERROR &lt;&gt; 0 ROLLBACK TRANSACTION StrarOrder;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> OrderItems(order_num, order_item, prod_id, quantity, item_price)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">20100</span>, <span class="number">1</span>, <span class="string">'BR01'</span>, <span class="number">100</span>, <span class="number">5.49</span>);</span><br><span class="line">IF @@ERROE &lt;&gt; 0 ROLLBACK TRANSACTION StratOrder;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> OrderItems(order_num, order_item, prod_id, quantity, item_price)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">20100</span>, <span class="number">2</span>, <span class="string">'BR03'</span>, <span class="number">100</span>, <span class="number">10.99</span>);</span><br><span class="line">IF @@ERROR &lt;&gt; 0 ROLLBACK TRANSACTION StartOrder;</span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL管理事务处理/" data-id="ckrdnuncp000w50i4vzehbmlp"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/SQL汇总数据/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SQL汇总数据
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/SQL组合查询/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL组合查询</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

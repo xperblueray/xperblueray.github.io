@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL创建高级联结 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL创建高级联结" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL创建高级联结
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL创建高级联结/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <h2 id="使用表别名"><a href="#使用表别名" class="headerlink" title="使用表别名"></a>使用表别名</h2><p>SQL除了可以对列名和计算字段使用别名，还允许给表名起别名。这样做有两个理由：</p>
+<ul>
+<li>缩短SQL语句；</li>
+<li>允许在一条SELECT语句中多次使用相同的表。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UTILIZED TABLE ALIAS</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RTRIM</span>(vend_name) + <span class="string">'（'</span> + <span class="keyword">RTRIM</span>(vend_country) + <span class="string">'）'</span> <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> Vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">AS</span> C, Orders <span class="keyword">AS</span> O, OrderItems <span class="keyword">AS</span> OI <span class="keyword">WHERE</span> C.cust_id = O.cust_id <span class="keyword">AND</span> OI.order_num = O.order_num <span class="keyword">AND</span> prod_id = <span class="string">'RGAN01'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用不同类型的联结"><a href="#使用不同类型的联结" class="headerlink" title="使用不同类型的联结"></a>使用不同类型的联结</h2><p>迄今为止，上述使用的只是内联结或<strong>等值联结</strong>的简单链接。现在来看三种其他联结：</p>
+<ul>
+<li>自联结（self-join）</li>
+<li>自然联结（natural join）</li>
+<li>外联结（outer join）<h3 id="自联结"><a href="#自联结" class="headerlink" title="自联结"></a>自联结</h3>联结中使用的两个表是相同的表，此时需要使用表别名。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- SELF-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_id, cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_name = (<span class="keyword">SELECT</span> cust_name <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_contact = <span class="string">'Jim Jones'</span>);</span><br><span class="line"><span class="keyword">SELECT</span> c1.cust_id, c1.cust_name, c1.cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">AS</span> c1, Customers <span class="keyword">AS</span> c2 <span class="keyword">WHERE</span> c1.cust_name = c2.cust_name <span class="keyword">AND</span> c2.cust_contact = <span class="string">'Jim Jones'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="自然联结"><a href="#自然联结" class="headerlink" title="自然联结"></a>自然联结</h3><p>无论何时进行联结，应该至少有一列不止出现在一个表中（被联结的列）。<strong>自然联结</strong>排除重复出现的列，使每列只返回一次。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- NATURAL-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> C.*, O.order_num, O.order_date, OI.prod_id, OI.quantity, OI.item_price <span class="keyword">FROM</span> Customers <span class="keyword">AS</span> C, Orders <span class="keyword">AS</span> O, OrderItems <span class="keyword">AS</span> OI <span class="keyword">WHERE</span> C.cust_id = O.cust_id <span class="keyword">AND</span> OI.order_num = O.order_num <span class="keyword">AND</span> prod_id = <span class="string">'RGAN01'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="外联结"><a href="#外联结" class="headerlink" title="外联结"></a>外联结</h3><p>联结包含在相关表中没有关联行的行，这种联结称为<strong>外联结</strong>。<br>与内联结关联两个表中的行不同的是，外联结还包括没有关联行的行。<br>在使用OUTER JOIN语法时，必须使用RIGHT或LEFT关键字指定包括其所有行的表（RIGHT指出的是OUTER JOIN右边的表，而LEFT指出的是OUTER JOIN左边的表）。<br>还存在另一种外联结，就是全外连接（full outer join）,它检索两个表中的所有行并关联那些可以关联的行。全外联结包含两个表的不关联的行。<br>Access、MariaDB、MySQL、Open Office Base 或SQLite不支持FULL OUTER JOIN语法。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- OUTER-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, Orders.order_num <span class="keyword">FROM</span> Customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id; <span class="comment">-- INNER-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, Orders.order_num <span class="keyword">FROM</span> Customers <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id; <span class="comment">-- LEFT OUTER-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, Orders.order_num <span class="keyword">FROM</span> Customers <span class="keyword">RIGHT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id; <span class="comment">-- RIGHT OUTER-JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, Orders.order_num <span class="keyword">FROM</span> Orders <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Customers <span class="keyword">ON</span> Orders.cust_id = Customers.cust_id;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用带聚集函数的联结"><a href="#使用带聚集函数的联结" class="headerlink" title="使用带聚集函数的联结"></a>使用带聚集函数的联结</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- JOIN WITH AGGREGATE FUNCTION</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, Orders.order_num <span class="keyword">FROM</span> Customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id; <span class="comment">-- WITHOUT AGGREGATE</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, <span class="keyword">COUNT</span>(Orders.order_num) <span class="keyword">AS</span> num_ord <span class="keyword">FROM</span> Customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id <span class="keyword">GROUP</span> <span class="keyword">BY</span> Customers.cust_id;  <span class="comment">-- WITH AGGREAGTE</span></span><br><span class="line"><span class="keyword">SELECT</span> Customers.cust_id, <span class="keyword">COUNT</span>(Orders.order_num) <span class="keyword">AS</span> num_ord <span class="keyword">FROM</span> Customers <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> Orders <span class="keyword">ON</span> Customers.cust_id = Orders.cust_id <span class="keyword">GROUP</span> <span class="keyword">BY</span> Customers.cust_id;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用联结和联结条件"><a href="#使用联结和联结条件" class="headerlink" title="使用联结和联结条件"></a>使用联结和联结条件</h2><p>联结及其使用的要点：</p>
+<ul>
+<li>注意所使用的联结类型。一般我们使用内联结，但是用外联结也有效。</li>
+<li>确切的联结语法，查看具体的文档</li>
+<li>保证使用正确的联结条件</li>
+<li>应该总是提供联结条件</li>
+<li>在一个联结中可以包含多个表，甚至可以对每个联结采用不同的联结类型。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL创建高级联结/" data-id="ckrdnunc9000f50i4jha7p9l2"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/SQL创建计算字段/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SQL创建计算字段
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/SQL存储过程/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL存储过程</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

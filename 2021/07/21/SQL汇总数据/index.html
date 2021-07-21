@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL汇总数据 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL汇总数据" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL汇总数据
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL汇总数据/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><p><strong>聚集函数</strong>（aggregate function）对某些行运行的函数，计算并返回一个值。</p>
+<h3 id="AVG-函数"><a href="#AVG-函数" class="headerlink" title="AVG()函数"></a>AVG()函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(prod_price) <span class="keyword">AS</span> avg_price <span class="keyword">FROM</span> Products;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(prod_price) <span class="keyword">AS</span> avg_price <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> vend_id = <span class="string">'DLL01'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="COUNT-函数"><a href="#COUNT-函数" class="headerlink" title="COUNT()函数"></a>COUNT()函数</h3><p>COUNT()函数有两种使用方式：</p>
+<ul>
+<li>使用COUNT(*)对表中行的数目进行计数，不管表列中包含的是空值（NULL）还是非空值</li>
+<li>使用COUNT(column)对特定列中具有值的行进行技术，忽略NULL值。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- COUNT</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> num_cust <span class="keyword">FROM</span> Customers;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(cust_email) <span class="keyword">AS</span> num_cust <span class="keyword">FROM</span> Customers; <span class="comment">-- 使用列名时忽略NULL的值，使用*不忽略</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="MAX-函数"><a href="#MAX-函数" class="headerlink" title="MAX()函数"></a>MAX()函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- MAX</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(prod_price) <span class="keyword">AS</span> max_price <span class="keyword">FROM</span> Products;  <span class="comment">-- 忽略列值为NULL的行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MIN-函数"><a href="#MIN-函数" class="headerlink" title="MIN()函数"></a>MIN()函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- MIN </span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(prod_price) <span class="keyword">AS</span> min_price <span class="keyword">FROM</span> Products;  <span class="comment">-- 用于文本数据时，MIN()返回该列排序后最前面的行，MAX()返回该列排序后最后的行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="SUM-函数"><a href="#SUM-函数" class="headerlink" title="SUM()函数"></a>SUM()函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- SUM</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(quantity) <span class="keyword">AS</span> items_ordered <span class="keyword">FROM</span> orderItems <span class="keyword">WHERE</span> order_num = <span class="number">20005</span>;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(item_price*quantity) <span class="keyword">AS</span> total_price <span class="keyword">FROM</span> OrderItems <span class="keyword">WHERE</span> order_num = <span class="number">20005</span>; <span class="comment">-- SUM()函数忽略值为NULL的行。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="聚集不同值"><a href="#聚集不同值" class="headerlink" title="聚集不同值"></a>聚集不同值</h2><p>上述5个聚集函数都可以如下使用：</p>
+<ul>
+<li>对所有行执行计算，指定ALL参数或不指定参数(因为ALL是默认行为)</li>
+<li>只包含不同的值，指定DISTINCT参数<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(<span class="keyword">DISTINCT</span> prod_price) <span class="keyword">AS</span> avg_price <span class="keyword">FROM</span> Products <span class="keyword">WHERE</span> vend_id = <span class="string">'DLL01'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="组合聚集函数"><a href="#组合聚集函数" class="headerlink" title="组合聚集函数"></a>组合聚集函数</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> num_items, <span class="keyword">MIN</span>(prod_price) <span class="keyword">AS</span> price_min, <span class="keyword">MAX</span>(prod_price) <span class="keyword">AS</span> price_max, <span class="keyword">AVG</span>(prod_price) <span class="keyword">AS</span> price_avg <span class="keyword">FROM</span> products;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL汇总数据/" data-id="ckrdnuncn000t50i4a714g512"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/SQL更新和删除数据/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SQL更新和删除数据
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/SQL管理事务处理/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL管理事务处理</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

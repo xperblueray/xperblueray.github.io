@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    SQL组合查询 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-SQL组合查询" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL组合查询
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL组合查询/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>利用UNION操作符将多条SELECT语句组合成一个结果集。</p>
+<h2 id="组合查询"><a href="#组合查询" class="headerlink" title="组合查询"></a>组合查询</h2><p>多数SQL查询只包含从一个或多个表中返回数据的单条SELECT语句。但是，SQL也允许执行多个查询（多条SELECT语句），并将结果作为一个查询结果集返回。<br>这些组合查询通常称为<strong>并</strong>（union）或<strong>复合查询</strong>（compound query）。<br>以下情况需要使用组合查询：</p>
+<ul>
+<li>在一个查询中从不同的表返回结构数据；</li>
+<li>对一个表执行多个查询，按一个查询返回数据。<h2 id="常见组合查询"><a href="#常见组合查询" class="headerlink" title="常见组合查询"></a>常见组合查询</h2><h3 id="使用UNION"><a href="#使用UNION" class="headerlink" title="使用UNION"></a>使用UNION</h3>使用UNION所要做的就是给出每条SELECT语句，在各条语句之间放上关键字UNION。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UTILIZE UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_state <span class="keyword">IN</span> (<span class="string">'IL'</span>,<span class="string">'IN'</span>,<span class="string">'MI'</span>); <span class="comment">-- SINGLE QUERY</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_name = <span class="string">'Fun4All'</span>; <span class="comment">-- SINGLE QUERY</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_state <span class="keyword">IN</span> (<span class="string">'IL'</span>,<span class="string">'IN'</span>,<span class="string">'MI'</span>) <span class="keyword">UNION</span> <span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_name = <span class="string">'Fun4All'</span>; <span class="comment">-- UNION QUERY</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_state <span class="keyword">IN</span> (<span class="string">'IL'</span>,<span class="string">'IN'</span>,<span class="string">'MI'</span>) <span class="keyword">OR</span> cust_name = <span class="string">'Fun4All'</span>; <span class="comment">-- MULTI WHERE</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="UNION规则"><a href="#UNION规则" class="headerlink" title="UNION规则"></a>UNION规则</h3><p>进行组合时需要注意几条规则：</p>
+<ul>
+<li>UNION必须由两条或者两条以上的SELECT语句组成，语句之间用关键字UNION分割</li>
+<li>UNION中的每个查询必须包含相同的列、表达式或聚集函数</li>
+<li>列数据类型必须兼容：类型不必完全相同，但必须是DBMS可以隐含转换的类型。<h3 id="包含或取消重复的行"><a href="#包含或取消重复的行" class="headerlink" title="包含或取消重复的行"></a>包含或取消重复的行</h3>UNION默认自动取消重复的列。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INCLUDE OR EXCLUDE DUPLICATE ROW</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_state <span class="keyword">IN</span> (<span class="string">'IL'</span>, <span class="string">'IN'</span>, <span class="string">'MI'</span>) <span class="keyword">UNION</span> <span class="keyword">ALL</span> <span class="keyword">SELECT</span> cust_name, cust_contact, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_name = <span class="string">'Fun4All'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="对组合查询结果排序"><a href="#对组合查询结果排序" class="headerlink" title="对组合查询结果排序"></a>对组合查询结果排序</h3><p>某些DBMS还支持另外两种UNION：</p>
+<ul>
+<li>EXCEPT（有时称为MINUS）可用来检索旨在第一个表中存在而在第二个表中不存在的行</li>
+<li>INTERSECT可用来检索两个表中都存在的行</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL组合查询/" data-id="ckrdnuncr001050i49mign451"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/SQL管理事务处理/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            SQL管理事务处理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/SQL联结表/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">SQL联结表</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

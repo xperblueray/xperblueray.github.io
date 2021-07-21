@@ -1,11 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SQL通配符过滤]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E9%80%9A%E9%85%8D%E7%AC%A6%E8%BF%87%E6%BB%A4%2F</url>
+    <content type="text"><![CDATA[通配符(wildcard) 用来匹配值的一部分的特殊字符。 搜索模式(search pattern)由字面值、通配符或两者组合构成的搜索条件。 谓词(predicate)操作符在做谓词时不是操作符。技术上说，LIKE是谓词而不是操作符。 %通配符表示任何字符出现任意次数，在Access中使用*而不是%。 _通配符与%一样，但它只能匹配单个字符，不能多也不能少。DB2不支持通配符_，Access需要使用?而不是_。 123456789101112131415161718192021222324-- WILDCARD FILTER-- LIKE OPERATOR-- % WILDCARDSELECT prod_id, prod_name FROM Products WHERE prod_name LIKE 'Fish%';SELECT prod_id, prod_name FROM Products WHERE prod_name LIKE '%bean bag%'; --Access使用*而不是%SELECT prod_name FROM Products WHERE prod_name LIKE 'F%y';-- _ WILDCARDSELECT prod_id, prod_name FROM Products WHERE prod_name LIKE '__ inch teddy bear';SELECT prod_id, prod_name FROM Products WHERE prod_name LIKE '% inch teddy bear';-- [] 通配符SELECT cust_contact FROM Customers WHERE cust_contact LIKE '[JM]%' ORDER BY cust_contact;SELECT cust_contact FROM Customers WHERE cust_contact LIKE ' (JM)%' ORDER BY cust_contact; -- 否定，Access中使用!而不是^SELECT cust_contact FROM Customers WHERE NOT cust_contact LIKE '[JM]%' ORDER BY cust_contact;]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL插入数据]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[INSERT用来将行插入（或添加）到数据库。插入有几种方式： 插入完整的行 插入行的一部分 插入某些查询的结果 插入完整的行123456789101112131415161718192021222324252627-- INSERT ROWINSERT INTO Customers VALUES('1000000006','Toy Land','123 Any Street','New York','NY','11111','USA',NULL,NULL);INSERT INTO Customers(cust_id,cust_name,cust_address,cust_city,cust_state,cust_zip,cust_country,cust_contact,cust_email) VALUES('100000007','Tony Stark','345 Any Street','New York','NY','22222','USA',NULL,NULL); 插入部分行省略的行必须满足一下某个条件： 该列定义为允许NULL值 在表中给出默认值12345678910111213INSERT INTO Customers(cust_id,cust_name,cust_address,cust_city,cust_state,cust_zip,cust_country) VALUES('100000008','Spiderman','345 Any Street','New York','NY','22222','USA'); 插入检索出的数据INSERT SELECT中不一定要求列名匹配。它使用的是列的位置。INSERT SELECT可以插入多行。 12345678910111213141516171819-- INSERT SELECTINSERT INTO Customers(cust_id,cust_contact,cust_email,cust_name,cust_address,cust_city,cust_state,cust_zip,cust_country)SELECT cust_id,cust_contact,cust_name,cust_address,cust_city,cust_state,cust_zip,cust_countryFROM CustNew; 从一个表复制到另一个表要将一个表的内容复制到一个全新的表（运行中创建的表），可以使用SELECT INTO语句。INSERT SELECT与SELECT INTO之间的一个重要差别是前者到处数据，后者导入数据。在使用SELECT INTO时，需要注意： 任何SELECT选项和子句都可以使用，包括WHERE和GROUP BY; 可利用联结从多个表插入数据 不管从多少个表中检索数据，数据都只能插入一个表中]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL使用视图]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE%2F</url>
+    <content type="text"><![CDATA[视图视图是虚拟的表。视图只包含使用时动态检索数据的查询。 123-- VIEWSELECT cust_name, cust_contact FROM Customers, Orders, OrderItems WHERE Customers.cust_id = Orders.cust_id AND OrderItems.order_num = Orders.order_num AND prod_id = 'RGAN01';SELECT cust_name, cust_contact FROM ProductCustomers WHERE prod_id = 'RGAN01'; 为什么使用视图视图的一些常见应用： 重用SQL语句 简化复杂的SQL操作。 使用表的一部分而不是整个表 保护数据。可以授权用户访问表的特定部分的权限，而不是整个表的访问权限。 更改数据格式和表示 视图的规则与限制视图创建和使用的一些最常见的规则和限制： 与表一样，视图必须唯一命名 对于可以创建的视图数目没有限制 创建视图，必须具有足够的访问权限 视图可以嵌套，即可以利用从其他视图中检索数据的查询来构造视图 许多DBMS禁止在视图查询中使用ORDER BY子句 有些DBMS要求对返回的列进行命名，如果列是计算字段，则需要使用别名 视图不能索引，也不能有关联的触发器或默认值 有些DBMS把视图作为只读的查询，这表示可以从试图检索数据，但不能将数据写回底层表 有些DBMS允许创建这样的视图，它不能进行导致行不再属于视图的插入或更新。 创建视图视图用CREATE VIEW语句来创建。删除视图，可以使用DROP语句，其语法为DROP VIEW viewname. 利用视图简化复杂的联结一个最常见的视图应该是隐藏复杂的SQL，这通常涉及联结。 123-- CREATE VIEWCREATE VIEW ProductCustomers AS SELECT cust_name, cust_contact, prod_id FROM Customers, Orders, OrderItems WHERE Customers.cust_id = Orders.cust_id AND OrderItems.order_num = Orders.order_num; -- CREATE VIEWSELECT cust_name, cust_contact FROM ProductCustomers WHERE prod_id = 'RGAN01'; -- SELECT FROM VIEW 用视图重新格式化检索出的视图的另一常见用途是重新格式化检索出的数据。 12345-- FORMAT DATASELECT RTRIM(vend_name) + '（' + RTRIM(vend_country) + '）' AS vend_title FROM Vendors ORDER BY vend_name;SELECT RTRIM(vend_name) || '（' || RTRIM(vend_country) || '）' AS vend_title FROM Vendors ORDER BY vend_name;CREATE VIEW VendorsLocations AS SELECT RTRIM(vend_name) + '（' + RTRIM(vend_country) + '）' AS vend_title FROM Vendors;CREATE VIEW VendorsLocations AS SELECT RTRIM(vend_name) || '（' || RTRIM(vend_country) || '）' AS vend_title FROM Vendors; 用视图过滤不想要的数据视图对于应用哦个普通的WHERE子句也很有用。 123-- FILTER NOT NEED DATA USE VIEWCREATE VIEW CustomerEMailList AS SELECT cust_id, cust_name, cust_email FROM Customers WHERE cust_email IS NOT NULL;SELECT * FROM CustomerEMailList; 使用视图与计算字段1234-- USE VIEW AND CALCULATE FIELDSELECT prod_id, quantity, item_price, quantity*item_price AS expanded_price FROM OrderItems WHERE order_num = 20008;CREATE VIEW OrderItemsExpanded AS SELECT order_num, prod_id, quantity, item_price, quantity*item_price AS expanded_price FROM OrderItems;SELECT * FROM OrderItemsExpanded WHERE order_num=20008;]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL分组数据]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E5%88%86%E7%BB%84%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[分组数据以汇总表内容的子集，涉及两个新SELECT语句子句：GROUP BY子句和HAVING子句。 数据分组创建分组1234-- CREATE GROUPSELECT vend_id, COUNT(*) AS num_prods FROM Products GROUP BY vend_id;SELECT vend_id, prod_price, count(*) as num_prods FROM Products GROUP BY vend_id, prod_price;SELECT vend_id, prod_price, count(*) as num_prods FROM Products GROUP BY prod_price,vend_id; 过滤分组HAVING非常类似于WHERE。所有类型的WHERE子句都可以用HAVING来替代。唯一的区别是WHERE过滤行，而HAVING过滤分组。HAVING支持所有WHERE操作符。HAVING和WHERE的差别：WHERE在数据分组前进行过滤，HAVING在数据分组后进行过滤。 1234-- FILTER GROUPSELECT cust_id, COUNT(*) AS orders FROM Orders GROUP BY cust_id HAVING COUNT(*) &gt;= 2;SELECT vend_id, COUNT(*) AS num_prods FROM Products WHERE prod_price &gt;= 4 GROUP BY vend_id HAVING COUNT(*) &gt;= 2;SELECT vend_id, COUNT(*) AS num_prods FROM Products GROUP BY vend_id HAVING COUNT(*) &gt;= 2; 分组和排序 123-- GROUP AND SORTSELECT order_num, COUNT(*) AS items FROM OrderItems GROUP BY order_num HAVING COUNT(*) &gt;= 3;SELECT order_num, COUNT(*) AS items FROM OrderItems GROUP BY order_num HAVING COUNT(*) &gt;= 3 ORDER BY items, order_num; SELECT子句顺序]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL创建和操纵表]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E5%88%9B%E5%BB%BA%E5%92%8C%E6%93%8D%E7%BA%B5%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[创建表两种创建表的方法： 交互式创建和管理数据库表的工具 表也可以直接用SQL语句操纵 表创建基础利用CREATE TABLE创建表，必须给出一下信息： 新表的名字，在关键字CREAET TABLE之后给出 表列的名字和定义，用逗号分隔 有的DBMS还要求指定表的位置1234567891011121314151617-- UPDATEUPDATE Customers SET cust_email = 'kim@thetoystore.com' WHERE cust_id = '1000000005'; -- UPDATE SINGLE COLUMNUPDATE Customers SET cust_contact = 'Sam Roberts', cust_email = 'sam@toyland.com' WHERE cust_id = '1000000006';UPDATE Customers SET cust_email=NULL WHERE cust_id='1000000005';-- DELETEDELETE FROM Customers WHERE cust_id='1000000006';-- CREATE AND MANIPULATE TABLE-- CREATE TABLE CREATE TABLE Products ( prod_id CHAR(10) NOT NULL, vend_id CHAR(10) NOT NULL, prod_name CHAR(254) NOT NULL, prod_price DECIMAL(8,2) NOT NULL, prod_desc VARCHAR(1000) NULL); 使用NULL值1234567891011121314151617-- NULL CREATE TABLE Orders( order_num INTEGER NOT NULL, order_date DATETIME NOT NULL, cust_id CHAR(10) NOT NULL);CREATE TABLE Vendors ( vend_id CHAR(10) NOT NULL, vend_name CHAR(50) NOT NULL, vend_address CHAR(50), vend_city CHAR(50), vend_state CHAR(5), vend_zip CHAR(10), vend_country CHAR(50)); 指定默认值12345678CREATE TABLE OrderItems( order_num INTEGER NOT NULL, order_item INTEGER NOT NULL, prod_id CHAR(10) NOT NULL, quantity INTEGER NOT NULL DEFAULT 1, item_price DEcimal(8,2) NOT NULL); 更新表使用ALTER TABLE 时需要考虑的事情： 理想情况下，不要再表中包含数据时对其进行更新。 所有的DBMS都允许给现有的表增加列，不过对所增加列的数据类型（以及NULL和DEFAULT的使用）有所限制。 许多DBMS不允许删除或更改表中的列。 多数DBMS允许重新命名表中的列。 许多DBMS限制对已经填有数据的列进行更改，对未填有数据的列几乎没有限制。使用ALTER TABLE更改表结构，必须给出下面的信息： 在ALTER TABLE 之后给出要更改的表名（该表必须存在，否则将出错） 列出要做哪些更改 123-- ALTER TABLEALTER TABLE Vendors ADD vend_phone CHAR(20);ALTER TABLE Vendors DROP COLUMN vend_phone; 复杂的表结构更改一般需要手动删除过程，它涉及以下步骤： 用心的列布局创建一个新表 使用INSERT SELECT语句从旧表复制数据到新表。 检验包含所需数据的新表 重命名旧表（如果确定，可以删除它） 用旧表原来的名字重命名新表 根据需要，重新创建触发器、存储过程、索引和外键 删除表1DROP TABLE CustCopy; 重命名表DB2、MariaDB、MySQL、Oracle和PostgreSQL用户使用RENAME语句，SQL Server用户使用sp_rename存储过程，SQLite用户使用ALTER TABLE 语句。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL使用子查询]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2%2F</url>
+    <content type="text"><![CDATA[子查询查询（query）任何SQL语句都是查询。但此术语一般指SELECT语句。SQL还允许创建子查询（subquery），即嵌套在其它查询中的查询。 利用子查询进行过滤12345678910-- FILTER BY SUBQUERYSELECT order_num FROM orderitems WHERE prod_id = 'RGAN01';SELECT cust_id FROM orders WHERE order_num IN ( SELECT order_num FROM orderitems WHERE prod_id = 'RGAN01');SELECT * FROM customers WHERE cust_id in ( SELECT cust_id FROM orders WHERE order_num IN ( SELECT order_num FROM orderitems WHERE prod_id = 'RGAN01' )); 作为子查询的SELECT语句只能查询单个列。企图检索多个列将返回错误。 作为计算字段使用子查询123-- USE SUBQUERY AS CALCULATE FIELDSELECT *, (SELECT count(*) FROM orders o WHERE o.cust_id = c.cust_id) AS cust_order_num FROM customers c; -- DIYSELECT cust_name, cust_state, (SELECT COUNT(*) FROM Orders WHERE Orders.cust_id = Customers.cust_id) AS orders FROM Customers ORDER BY cust_name;]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL创建计算字段]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5%2F</url>
+    <content type="text"><![CDATA[计算字段字段(field)基本上与列(column)的意思相同，经常互换使用，不过数据库列一般称为列，而属于字段通常与计算字段一起使用。 12345-- CALCULATE FIELDSELECT vend_name + '(' + vend_country + ')' FROM Vendors ORDER BY vend_name;SELECT vend_name || '(' || vend_country || ')' FROM Vendors ORDER BY vend_name;SELECT RTRIM(vend_name) + '(' + RTRIM(vend_country) + ')' FROM Vendors ORDER BY vend_name;SELECT RTRIM(vend_name) || '(' || RTRIM(vend_country) || ')' FROM Vendors ORDER BY vend_name; 拼接字段拼接(concatenate)将值联结到一起(将一个值附加到另一个值)构成单个值。Access和SQL Server使用+号。DB2、Oracle、PostgreSQL、SQLite和Open Office Base使用||。在MySQL和MariaDB中，必须使用特殊的函数。许多数据库保存填充为列宽的文本值，而实际上你要的结果不需要这些空格。大多数DBMS都支持RTRIM()去掉字符串右边的空格、LTRIM()去掉字符串左边的空格、TRIM()去掉字符串左右两边的空格。 123 -- ALIAS SELECT RTRIM(vend_name) + '(' + RTRIM(vend_country) + ')' AS vend_title FROM Vendors ORDER BY vend_name;SELECT RTRIM(vend_name) || '(' || RTRIM(vend_country) || ')' AS vend_title FROM Vendors ORDER BY vend_name; 执行算术计算1234567-- EXECUTE CALCULATESELECT prod_id, quantity, item_price FROM OrderItems WHERE order_num = 20008;SELECT prod_id, quantity, item_price, quantity*item_price AS expanded_price FROM OrderItems WHERE order_num = 20008;SELECT 3*2；SELECT Trim('abc');SELECT Now();]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL创建高级联结]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E5%88%9B%E5%BB%BA%E9%AB%98%E7%BA%A7%E8%81%94%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[使用表别名SQL除了可以对列名和计算字段使用别名，还允许给表名起别名。这样做有两个理由： 缩短SQL语句； 允许在一条SELECT语句中多次使用相同的表。 123-- UTILIZED TABLE ALIASSELECT RTRIM(vend_name) + '（' + RTRIM(vend_country) + '）' AS vend_title FROM Vendors ORDER BY vend_name;SELECT cust_name, cust_contact FROM Customers AS C, Orders AS O, OrderItems AS OI WHERE C.cust_id = O.cust_id AND OI.order_num = O.order_num AND prod_id = 'RGAN01'; 使用不同类型的联结迄今为止，上述使用的只是内联结或等值联结的简单链接。现在来看三种其他联结： 自联结（self-join） 自然联结（natural join） 外联结（outer join）自联结联结中使用的两个表是相同的表，此时需要使用表别名。123-- SELF-JOINSELECT cust_id, cust_name, cust_contact FROM Customers WHERE cust_name = (SELECT cust_name FROM Customers WHERE cust_contact = 'Jim Jones');SELECT c1.cust_id, c1.cust_name, c1.cust_contact FROM Customers AS c1, Customers AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact = 'Jim Jones'; 自然联结无论何时进行联结，应该至少有一列不止出现在一个表中（被联结的列）。自然联结排除重复出现的列，使每列只返回一次。 12-- NATURAL-JOINSELECT C.*, O.order_num, O.order_date, OI.prod_id, OI.quantity, OI.item_price FROM Customers AS C, Orders AS O, OrderItems AS OI WHERE C.cust_id = O.cust_id AND OI.order_num = O.order_num AND prod_id = 'RGAN01'; 外联结联结包含在相关表中没有关联行的行，这种联结称为外联结。与内联结关联两个表中的行不同的是，外联结还包括没有关联行的行。在使用OUTER JOIN语法时，必须使用RIGHT或LEFT关键字指定包括其所有行的表（RIGHT指出的是OUTER JOIN右边的表，而LEFT指出的是OUTER JOIN左边的表）。还存在另一种外联结，就是全外连接（full outer join）,它检索两个表中的所有行并关联那些可以关联的行。全外联结包含两个表的不关联的行。Access、MariaDB、MySQL、Open Office Base 或SQLite不支持FULL OUTER JOIN语法。 12345-- OUTER-JOINSELECT Customers.cust_id, Orders.order_num FROM Customers INNER JOIN Orders ON Customers.cust_id = Orders.cust_id; -- INNER-JOINSELECT Customers.cust_id, Orders.order_num FROM Customers LEFT OUTER JOIN Orders ON Customers.cust_id = Orders.cust_id; -- LEFT OUTER-JOINSELECT Customers.cust_id, Orders.order_num FROM Customers RIGHT OUTER JOIN Orders ON Customers.cust_id = Orders.cust_id; -- RIGHT OUTER-JOINSELECT Customers.cust_id, Orders.order_num FROM Orders FULL OUTER JOIN Customers ON Orders.cust_id = Customers.cust_id; 使用带聚集函数的联结1234-- JOIN WITH AGGREGATE FUNCTIONSELECT Customers.cust_id, Orders.order_num FROM Customers INNER JOIN Orders ON Customers.cust_id = Orders.cust_id; -- WITHOUT AGGREGATESELECT Customers.cust_id, COUNT(Orders.order_num) AS num_ord FROM Customers INNER JOIN Orders ON Customers.cust_id = Orders.cust_id GROUP BY Customers.cust_id; -- WITH AGGREAGTESELECT Customers.cust_id, COUNT(Orders.order_num) AS num_ord FROM Customers LEFT OUTER JOIN Orders ON Customers.cust_id = Orders.cust_id GROUP BY Customers.cust_id; 使用联结和联结条件联结及其使用的要点： 注意所使用的联结类型。一般我们使用内联结，但是用外联结也有效。 确切的联结语法，查看具体的文档 保证使用正确的联结条件 应该总是提供联结条件 在一个联结中可以包含多个表，甚至可以对每个联结采用不同的联结类型。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL存储过程]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[存储过程就是为以后使用而保存的一条或多条SQL语句。 为什么使用存储过程使用存储过程的主要理由： 通过把处理封装在一个易用的单元中，可以简化复杂的操作。 不要求反复建立一系列处理步骤，因而保证了数据的一致性。 简化对变动的管理。 存储过程通常以编译过的形式存储，所以提高了性能。 一些只能用在单个请求的SQL元素和特性，存储过程可以使用它们来编写功能更强更灵活的代码。存储过程的一些缺陷： 不同DBMS的存储过程语法有所不同。 编写存储过程 比编写SQL语句复杂。执行存储过程执行存储过程的SQL语句很简单，即EXECUTE。EXECUTE接受存储过程名和需要传递给它的任何参数。12345-- EXECUTE PROCEDUREEXECUTE AddNewProduct('JSTS01','Stuffed Eiffel Tower',6.49,'Plush stuffed toy with the text La Tour Eiffel in red white and blue'); 创建存储过程123456789101112-- CREATE PROCEDURECREATE PROCEDURE MailingListCount( ListCount OUT INTEGER)IS v_rows INTEGER;BEGIN SELECT COUNT(*) INTO v_rows FROM Customers WHERE NOT cust_email IS NULL; ListCount := v_rows;END; 这个存储过程有一个名为ListCount的参数。此参数从存储过程返回一个值而不是传递一个值给存储过程。关键字OUT来指示这种行为。Oracle支持IN（传递值给存储过程）、OUT（从存储过程返回值）、INOUT（即传递值给存储过程也从存储过程返回值）类型的参数存储过程的代码括在BEGIN和END语句中。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253-- CREATE PROCEDURECREATE PROCEDURE MailingListCount( ListCount OUT INTEGER)IS v_rows INTEGER;BEGIN SELECT COUNT(*) INTO v_rows FROM Customers WHERE NOT cust_email IS NULL; ListCount := v_rows;END; -- ORACLE PROCEDUREvar ReturnValue NUMBEREXEC MailingListCount(:ReturnValue);SELECT ReturnValue; -- EXEC ORACLE PROCEDURECREATE PROCEDURE MailingListCount AS DECLARE @cnt INTEGER SELECT @cnt = COUNT(*)FROM CustomersWHERE NOT cust_email IS NULL;RETURN @cnt; -- CREATE SQL SERVER PROCEDUREDECLARE @ReturnValue INTEXECUTE@ReturnVlaue = MailingListCount;SELECT @ReturnValue; -- EXEC SQL SERVER PROCEDURECREATE PROCEDURE NewOrder@cust_id CHAR(10)AS-- Declare variable for order numberDECLARE @order_num INTEGER-- Get current highest order numberSELECT @order_num=MAX(order_num) FROM Orders-- Determine next order numberSELECT @order_num=@order_num+1-- Insert new orderINSERT INTO Order(order_num, order_date, cust_id)VALUES(@order_num, GETDATE(), @cust_id)-- Return order numberRETURN @order_num; -- SQL ServerCREATE PROCEDURE NewOrder@cust_id CHAR(10)AS-- Insert new orderINSERT INTO Orders(cust_id)VALUES(@cust_id)-- Return order numSELECt order_num = @@IDENTITY;]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL使用游标]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87%2F</url>
+    <content type="text"><![CDATA[游标结果集 SQL查询所检索出的结果。有时需要在检索出来的行中前进或者后退一行或多行，这就是游标的用途所在。游标是一个存储在DBMS服务器上的数据库查询，它不是一条SELECT语句，而是被该语句检索出来的结果集。游标常见的一些选项和特性如下： 能够标记游标为只读，使数据能读取，但不能更新和删除 能控制可以执行的定向操作（向前、向后、第一、绝对位置、相对位置等） 能标记某些列为可编辑的，某些列为不可编辑的 规定范围，使游标对创建它的特定请求（如存储过程）或对所有请求可访问 只是DBMS对检索出的数据（而不是指出表中活动数据）进行复制，使数据在游标打开和访问期间不变化 使用游标使用游标涉及几个明确的步骤： 在使用游标前，必须声明（定义）它 一旦声明，就必须打开游标以供使用 对于填有数据的游标，根据需要取出（检索）各行 在结束游标使用时，必须关闭游标，可以的话，释放游标 创建游标使用DELAERE语句创建游标 123456789-- CREATE CURSORDECLARE CustCursor CURSOR FORSELECT * FROM CustomersWHERE cust_email IS NULL -- DB2 MariaDB MySQL SQL ServerDECLARE CURSOR CustCursorISSELECT * FROM CustomersWHERE cust_email IS NULL -- Oracle PostgreSQL 使用游标12-- UTILIZE CURSOROPEN CURSOR CustCursor FETCH可以访问游标数据。FETCH指出要检索哪些行，从何处检索它们以及将它们放于何处（如变量名）。使用Oracle语法从游标检索一行（第一行）： 12345678910DECLARE TYPE CustCursor IS REFCURSOR RETURN Customers%ROWTYPE;DECLARE CustRecordCustomres%ROWTYPEBEGIN OPEN CustCursor; FETCH CustCursor INTO CustRecord; CLOSE CustCursor;END; 使用Oracle语法，从第一行到最后一行，对检索出来的数据进行循环： 1234567891011121314DECLARE TYPE CustCursor IS REFCURSOR RETURN Customers%ROWTYPE;DECLARE CustRecordCustomers%ROWTYPEBEGIN OPEN CustCursor; LOOP FETCH CustCursor INTO CustRecord; EXIT WHEN CustCursor%NOTFOUND; ... END LOOP; CLOSE CustCursor;END; 使用SQL Server 1234567891011121314151617181920DECLARE @cust_id CHAR(10), @cust_name CHAR(50), @cust_address CHAR(50), @cust_city CHAR(50), @cust_state CHAR(5), @cust_zip CHAR(10), @cust_country CHAR(50), @cust_contact CHAR(50), @cust_email CHAR(255)OPEN CustCursorFETCH NEXT FROM CustCursorINTO @cust_id, @cust_name, @cust_address, @cust_city, @cust_state,@cust_zip, @cust_couontry, @cust_contact, @cust_emailWHILE @@FETCH_STATUS = 0BEGINFETCH NEXT FROM CustCursor INTO @cust_id, @cust_name, @cust_address, @cust_city, @cust_state, @cust_zip, @cust_coruntry, @cust_contact, @cust_emailENDCLOSE CustCursor 关闭游标DB2、 Oracle和PostgreSQL的语法关闭游标： 1CLOSE CustCursor SQL Server 12CLOSE CustCursorDEALLOCATE CURSOR CustCursor]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL更新和删除数据]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[利用UPDATE和DELETE语法进一步操作表数据 更新数据两种使用UPDATE的方式： 更新表中的特定行 更新表中的所有行基本的UPDATE语句由三部分组成，分别是： 要更新的表 列名和它们的新值 确定要更新哪些行的过滤条件1234-- UPDATEUPDATE Customers SET cust_email = 'kim@thetoystore.com' WHERE cust_id = '1000000005'; -- UPDATE SINGLE COLUMNUPDATE Customers SET cust_contact = 'Sam Roberts', cust_email = 'sam@toyland.com' WHERE cust_id = '1000000006';UPDATE Customers SET cust_email=NULL WHERE cust_id='1000000005'; 删除数据使用DELETE的两种方法： 从表中删除特定的行 从表中删除所有的行如果想从表中删除所有行，不要使用DELETE。可使用TRUNCATE TABLE语句，它完成相同的动作，而且速度更快。12-- DELETEDELETE FROM Customers WHERE cust_id='1000000006'; 更新和删除的指导原则使用UPDATE或DELETE时所遵循的重要原则： 除非确实打算更新和删除每一行，否则绝对不要使用不带WHERE子句的UPDATE或DELETE语句。 保证每个表都有主键 在UPDAET或DELETE 语句使用WHERE子句前，应该先用SELECT进行测试，保证它过滤的是正确的记录 使用强制实施引用完整性的数据库，这样DBMS将不允许删除其数据与其他表相关联的行 有的DBMS允许数据库管理员施加约束，防止执行不带WHERE子句的UPDATE或DELETE 语句。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL汇总数据]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[聚集函数聚集函数（aggregate function）对某些行运行的函数，计算并返回一个值。 AVG()函数12SELECT AVG(prod_price) AS avg_price FROM Products;SELECT AVG(prod_price) AS avg_price FROM Products WHERE vend_id = 'DLL01'; COUNT()函数COUNT()函数有两种使用方式： 使用COUNT(*)对表中行的数目进行计数，不管表列中包含的是空值（NULL）还是非空值 使用COUNT(column)对特定列中具有值的行进行技术，忽略NULL值。123-- COUNTSELECT COUNT(*) AS num_cust FROM Customers;SELECT COUNT(cust_email) AS num_cust FROM Customers; -- 使用列名时忽略NULL的值，使用*不忽略 MAX()函数12-- MAXSELECT MAX(prod_price) AS max_price FROM Products; -- 忽略列值为NULL的行 MIN()函数12-- MIN SELECT MIN(prod_price) AS min_price FROM Products; -- 用于文本数据时，MIN()返回该列排序后最前面的行，MAX()返回该列排序后最后的行 SUM()函数123-- SUMSELECT SUM(quantity) AS items_ordered FROM orderItems WHERE order_num = 20005;SELECT SUM(item_price*quantity) AS total_price FROM OrderItems WHERE order_num = 20005; -- SUM()函数忽略值为NULL的行。 聚集不同值上述5个聚集函数都可以如下使用： 对所有行执行计算，指定ALL参数或不指定参数(因为ALL是默认行为) 只包含不同的值，指定DISTINCT参数1SELECT AVG(DISTINCT prod_price) AS avg_price FROM Products WHERE vend_id = 'DLL01'; 组合聚集函数1SELECT COUNT(*) AS num_items, MIN(prod_price) AS price_min, MAX(prod_price) AS price_max, AVG(prod_price) AS price_avg FROM products;]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL管理事务处理]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E7%AE%A1%E7%90%86%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%2F</url>
+    <content type="text"><![CDATA[介绍事务处理，以及如何利用COMMIT和ROLLBACK语句管理事务处理。 事务处理使用事务处理（transaction processing），通过确保成批的SQL操作要么完全执行，要么完全不执行，来维护数据的完整性。事务处理是一种机制，用来管理必须成批执行的SQL操作，保证数据库不包含不完整的操作结果。事务处理的几个术语： 事务（tranction）指一组SQL语句 回退（rollback）指撤销指定SQL语句的过程 提交（commit）指将未存储的SQL语句结果写入数据库表 保留点（savepoint）指四和五处理中设置的临时占位符（placeholder）,可以对他发布回退（与回退整个事务处理不同） 可以回退哪些语句事务处理用来管理INSERT、UPDATE和DELTE语句。不能回退SELECT语句（回退SELECT语句也没必要），也不能回退CREATE和DROP操作。事务处理中可以使用这些语句，但进行回退时，这些操作也不能撤销。 控制事务处理管理事务的关键在于将SQL语句组分解为逻辑块，并明确规定数据合适应该回退，合适不应该回退。有的DBMS要求明确表示事务处理块的开始和结束。在SQL Server中，标识如下： 123BEGIN TRANSACTION...COMMIT TRANSACTION 在BEGIN TRANSACTION和COMMIT TRANSACTION语句之间的SQL必须完全执行或者完全不执行。在MariaDB和MySQL中等同的代码： 12STRAT TRANSACTION... 在Oracle使用的语法： 12SET TRANSACTION... 在PostgreSQL使用ANSI SQL语法： 12BEGIN ... 使用ROLLBACKSQL的ROLLBACK命令用来回退（撤销）SQL语句 123-- ROLLBACKDELETE FROM Orders;ROLLBACK; 使用COMMIT一般的SQL语句都是针对数据库表直接执行和编写的。就是所谓的隐式提交（implicit commit），即提交（写或保存）操作是自动进行的。在事务处理模块中，提交不会隐式进行。进行明确的提交，使用COMMIT语句。 12345678910111213-- COMMITBEGIN TRANSACTIONDELETE OrderItems WHERE order_num = 12345DELETE Orders WHERE order_num =12345COMMIT TRANSACTION -- SQL Server### 使用保留点SET TRANSACTIONDELETE OrderItems WHERE order_num = 12345;DELELE Orders WHERE order_num = 12345;COMMIT; -- Oracle 使用保留点使用简单的ROLLBACK和COMMIT语句，就可以写入或撤销整个事务。倒是，只对简单的事务才能这样做，复杂的事务可能需要部分提交或回退。要支持回退部分事务，必须在事务处理块中的合适位置放置占位符。在SQL中，这些占位符称为保留点。在MariaDB、MySQL和Oracle中创建占位符，可使用SAVEPOINT语句： 1SAVEPOINT delete1; 在SQL Server中，如下进行： 1SAVE TRANSACTION delte1; 每个保留点都要取能够标识它的唯一名字，以便在回退时，DBMS知道回退到何处。在SQL Server中，可如下进行： 12ROLLBACK TRANSACTION delete1; -- SQL Server ROLLBACK TO SAVEPOINTROLLBACK TO delete1; -- Maria MySQL AND Oracle ROLLBACK TO PLACEHOLDER 一个完整的SQL Server例子： 123456789101112131415-- FULL ROLLBACK OF SQL ServerBEGIN TRANSACTIONINSERT INTO Customers(cust_id, cust_name)VALUES('1000000010', 'Toys Emporium');SAVE TRANSACTION StartOrder;INSERT INTO Order(order_num, order_date, cust_id)VALUES(20100, '2001/12/1', '1000000010');IF @@ERROR &lt;&gt; 0 ROLLBACK TRANSACTION StrarOrder;INSERT INTO OrderItems(order_num, order_item, prod_id, quantity, item_price)VALUES(20100, 1, 'BR01', 100, 5.49);IF @@ERROE &lt;&gt; 0 ROLLBACK TRANSACTION StratOrder;INSERT INTO OrderItems(order_num, order_item, prod_id, quantity, item_price)VALUES(20100, 2, 'BR03', 100, 10.99);IF @@ERROR &lt;&gt; 0 ROLLBACK TRANSACTION StartOrder;COMMIT TRANSACTION]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL组合查询]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2%2F</url>
+    <content type="text"><![CDATA[利用UNION操作符将多条SELECT语句组合成一个结果集。 组合查询多数SQL查询只包含从一个或多个表中返回数据的单条SELECT语句。但是，SQL也允许执行多个查询（多条SELECT语句），并将结果作为一个查询结果集返回。这些组合查询通常称为并（union）或复合查询（compound query）。以下情况需要使用组合查询： 在一个查询中从不同的表返回结构数据； 对一个表执行多个查询，按一个查询返回数据。常见组合查询使用UNION使用UNION所要做的就是给出每条SELECT语句，在各条语句之间放上关键字UNION。12345-- UTILIZE UNIONSELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_state IN ('IL','IN','MI'); -- SINGLE QUERYSELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_name = 'Fun4All'; -- SINGLE QUERYSELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_state IN ('IL','IN','MI') UNION SELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_name = 'Fun4All'; -- UNION QUERYSELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_state IN ('IL','IN','MI') OR cust_name = 'Fun4All'; -- MULTI WHERE UNION规则进行组合时需要注意几条规则： UNION必须由两条或者两条以上的SELECT语句组成，语句之间用关键字UNION分割 UNION中的每个查询必须包含相同的列、表达式或聚集函数 列数据类型必须兼容：类型不必完全相同，但必须是DBMS可以隐含转换的类型。包含或取消重复的行UNION默认自动取消重复的列。12-- INCLUDE OR EXCLUDE DUPLICATE ROWSELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_state IN ('IL', 'IN', 'MI') UNION ALL SELECT cust_name, cust_contact, cust_email FROM Customers WHERE cust_name = 'Fun4All'; 对组合查询结果排序某些DBMS还支持另外两种UNION： EXCEPT（有时称为MINUS）可用来检索旨在第一个表中存在而在第二个表中不存在的行 INTERSECT可用来检索两个表中都存在的行]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL联结表]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E8%81%94%E7%BB%93%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[联结SQL最强大的功能之一就是能在数据查询的执行中联结（join）表。联结是利用SQL的SELECT能执行的最重要的操作。 关系表为什么使用联结如果数据存储在多个表中，使用联结就可以用一条SELECT语句就检索出数据。联结是一种机制，用来在一条SELECT语句中关联表，因此称为联结。 创建联结12-- CREATE JOINSELECT vend_name, prod_name, prod_price FROM Vendors, Products WHERE Vendors.vend_id = Products.vend_id; WHERE子句的重要性所有联结都有WHERE子句。返回笛卡尔积的链接，也称叉联结（cross join）; 内联结基于两个表之间的相等测试，称为等值联结（equijoin）。这种联结也成为内联结（inner join）。 12-- INNER JOINSELECT vend_name, prod_name, prod_price FROM Vendors INNER JOIN Products ON Vendors.vend_id = Products.vend_id; 联结多个表12345678-- JOIN MULTI TABLESSELECT prod_name, vend_name, prod_price, quantity FROM OrderItems, Products, Vendors WHERE Products.vend_id = Vendors.vend_id AND OrderItems.prod_id = Products.prod_id AND order_num = 20007;SELECT cust_name, cust_contact FROM Customers WHERE cust_id IN ( SELECT cust_id from Orders WHERE order_num IN ( SELECT order_num FROM OrderItems WHERE prod_id = 'RGAN01' ));SELECT cust_name, cust_contact FROM Customers, Orders, OrderItems WHERE Customers.cust_id = Orders.cust_id AND Orders.order_num = OrderItems.order_num AND prod_id = 'RGAN01';]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL使用数据处理函数]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[函数 使用函数文本处理函数SOUNDEX是一个将任何文本串转换为描述其语音表示的字幕数字模式的算法。 1234SELECT vend_name, UPPER(vend_name) AS vend_name_upcase FROM Vendors ORDER BY vend_name;SELECT cust_name, cust_contact FROM Customers WHERE cust_contact = 'Michael Green'; -- 联系名错误，实际上应该是Michael GreenSELECT cust_name, cust_contact FROM Customers WHERE SOUNDEX(cust_contact) = 'Michael Green'; 日期和时间处理函数123456789-- DATE AND TIME FUNCTIONSELECT order_num FROM Orders WHERE DATEPART(yy, order_date) = 2012; -- SQL Server 适用SELECT order_num FROM Orders WHERE DATEPART('yyyy', order_date) = 2012; -- Access适用SELECT order_num FROM Orders WHERE DATE_PART('year', order_date) = 2012; -- PostgreSQL适用SELECT order_num FROM Orders WHERE to_number(to_char(order_date, 'YYYY')) = 2012; -- Oracle适用SELECT order_num FROM Orders WHERE order_date BETWEEN to_date('01-01-2012') AND to_date('12-31-2012'); -- OracleSELECT order_num FROM Orders WHERE YEAR(order_date) = 2012; -- MySQL 和MariaDB适用SELECT order_num FROM Orders WHERE strfime('%Y', order_date) = 2012; -- SQLite 数值处理函数在主要DBMS的函数中，数值函数是最一致、最统一的函数。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL高级SQL特性]]></title>
+    <url>%2F2021%2F07%2F21%2FSQL%E9%AB%98%E7%BA%A7SQL%E7%89%B9%E6%80%A7%2F</url>
+    <content type="text"><![CDATA[约束关系数据库存储分解为多个表的数据，每个表存储相应的数据。利用键来简历从一个表到另一个表的引用（由此产生了数据引用完整性（referential integrity））。约束（constraint）管理如何插入或处理数据库数据的规则。DBMS通过在数据库表上施加约束来实施引用完整性。 主键主键是一种特殊的约束，用来保证一列（或一组列） 中的值是唯一的，而且永不改动。表中任意列只要满足以下条件，都可以用于主键： 任意两行的主键值都不相同 每行都具有一个主键值 包含主键值的列从不修改或更新 主键值不能重用123456789101112CREATE TABLE Vendors( vend_id CHAR(10) NOT NULL PRIMARY KEY, vend_name CHAR(50) NOT NULL, vend_address CHAR(50) NULL, vend_city CHAR(50) NULL, vend_state CHAR(5) NULL, vend_zip CHAR(10) NULL, vend_country CHAR(50) NULL);ALTER TABLE Vendors ADD CONSTRAINT PRIMARY KEY(vend_id); 外键外键是表中的一列，其值必须列在另一表的主键中。外键是保证引用完整性的极其重要的部分。 1234567CREATE TABLE Orders( order_num INTEGER NOT NULL PRIMARY KEY, order_date DATETIME NOT NULL, cust_id CHAR(10) NOT NULL REFERENCES Customers(cust_id));ALTER TABLE Orders ADD CONSTRAINT FOREIGN KEY(cust_id) REFERENCES Customers(cust_id) 唯一约束唯一约束用来保证一列（或一组列）中的数据是唯一的。与主键的区别： 表可包含多个唯一约束，但每个表只允许一个主键 唯一约束列可包含NULL值 唯一约束列可修改或更新 唯一约束列的值可重复使用 与逐渐不一样，唯一约束不能用来定义外键。唯一约束既可以用UNIQUE关键字在标定一种定义，也可以用单独的CONSTRAINT定义。 检查约束检查约束常见的用途： 检查最小或最大值。例如防止0个物品的订单 指定范围。例如保证发货日期大于等于今天的日期 只允许特定的值12345678910-- CHECK CONSTRAINTCREATE TABLE OrderItems( order_num INTEGER NOT NULL, order_item INTEGER NOT NULL, prod_id CHAR(10) NOT NULL, quantity INTEGER NOT NULL CHECK(quentity &gt; 0), item_price MONEY NOT NULL);ADD CONSTRAINT CHECK(gender LIKE '[MF]') 索引索引用来排序数据以加快搜索和排序操作的速度。可以在一个或多个列上定义索引，使DBMS保存其内容的一个排过序的列表。创建索引必须注意： 索引改善检索操作的性能，但降低了数据插入、修改和删除的性能。在执行这些操作时，DBMS必须动态地更新索引 索引数据可能要占用大量的存储空间 并非所有数据都适合索引。取值更多的数据，通过索引能得到更多好处 索引用于数据过滤和数据排序。如果经常以某种特定顺序排序数据，则该数据可能适合做索引 可以在索引中定义多个列。1CREATE INDEX prod_name_ind ON PRODUCTS(prod_name); 触发器触发器是特殊的存储过程，它在特定的数据库活动发生时自动执行。触发器可以与特定表上的INSERT、UPDATE和DELETE操作（或组合）相关联。触发器与单个的表相关联。 触发器内的代码具有一下数据的访问权： INSERT操作中的所有数据 UPDATE操作中的所有新数据和旧数据 DELETE操作中删除的数据触发器可以在特定操作执行之前和之后执行。 触发器的常见用途： 保证数据一致。例如，在INSERT或UPDATE操作中将所有州名转换为大写。 基于某个表的变动在其他表上执行活动。例如每当更新或删除一行是将审计跟踪记录写入某个日志表 进行额外的验证并根据需要回退数据。 计算计算列的值或更新时间戳。创建一个触发器，他对所有INSERT和UPDATE操作，将Customers表中的cust_state列转换为大写12345678910111213141516-- TRIGGERCREATE TRIGGER customer_state ON CustomersFOR INSERT, UPDATEAS UPDATE CustomersSET cust_state = Upper(cust_state)WHERE Customers.cust_id = inserted.cust_id; -- SQL ServerCREATE TRIGGER customer_state AFTER INSERT OR UPDATEFOR EACH ROWBEGIN UPDATE CustomersSET cust_state=Upper(cust_state)WHERE Customers.cust_id=:OLD.cust_idEND; -- Oracle PostgreSQL 数据库安全任何安全系统的基础都是用户授权和身份确认。一般来说，需要保护的操作有： 对数据库管理功能（创建表、更改或删除已存在的表）的访问 对特定数据库或表的访问 访问的类型（只读、对特定列的访问等） 仅通过视图或存储过程对表进行访问 创建多层次的安全措施，从而匀速多种基于登录的访问和控制 限制管理用户账号的能力安全性使用SQL的GRANT和REVOKE语句来管理。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL必知必会</tag>
+        <tag>SQL基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[修改已提交到github的用户名和邮箱]]></title>
     <url>%2F2021%2F07%2F21%2F%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1%2F</url>
     <content type="text"><![CDATA[背景最近在家用的是老婆的电脑，经常在提交代码的时候发现author是她的名字。由此引出今天的问题 方案查询诸多资料，有推荐使用 1git rebase -i HEAD~n // n为提交次数 但是对我而言行不通，可能是因为只有一次提交的原因。 经过不断尝试，最终找到解决方案如下 1. 查找提交记录1git log 2. 复制要修改的提交记录id3. 进入提交记录1git reset --soft 9731ab6xxx 4. 修改用户信息1git commit --amend --author='yourname &lt;youremail@email.com&gt;' 5. 退出编辑，vim使用:q退出6. 提交、1git push origin --force --all 问题到这里就修复了。]]></content>
       <categories>
         <category>github</category>
       </categories>
+      <tags>
+        <tag>github</tag>
+        <tag>git</tag>
+      </tags>
   </entry>
 </search>
