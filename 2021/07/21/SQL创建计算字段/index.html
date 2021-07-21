@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    SQL通配符过滤 |
+    SQL创建计算字段 |
     
     星空</title>
   
@@ -23,7 +23,7 @@
 <body>
 <main class="content">
   <section class="outer">
-  <article id="post-SQL通配符过滤" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+  <article id="post-SQL创建计算字段" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
     
@@ -31,7 +31,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SQL通配符过滤
+      SQL创建计算字段
     </h1>
   
   
@@ -44,8 +44,8 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL通配符过滤/" class="article-date">
-  <time datetime="2021-07-21T14:11:07.000Z" itemprop="datePublished">2021-07-21</time>
+        <a href="/2021/07/21/SQL创建计算字段/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
   <div class="article-category">
@@ -61,18 +61,22 @@
       
 
       
-        <p># 用通配符进行过滤</p>
-<p><strong>通配符</strong>(wildcard) 用来匹配值的一部分的特殊字符。</p>
-<p><strong>搜索模式</strong>(search pattern)由字面值、通配符或两者组合构成的搜索条件。</p>
-<p><strong>谓词</strong>(predicate)操作符在做谓词时不是操作符。技术上说，LIKE是谓词而不是操作符。</p>
-<p>%通配符表示任何字符出现任意次数，在Access中使用*而不是%。</p>
-<p>_通配符与%一样，但它只能匹配单个字符，不能多也不能少。DB2不支持通配符_，Access需要使用?而不是_。</p>
+        <p>## 计算字段</p>
+<p><strong>字段</strong>(field)基本上与<strong>列</strong>(column)的意思相同，经常互换使用，不过数据库列一般称为列，而属于<strong>字段</strong>通常与计算字段一起使用。</p>
 <p>&lt;!–￼0–&gt;</p>
+<p>## 拼接字段</p>
+<p><strong>拼接</strong>(concatenate)将值联结到一起(将一个值附加到另一个值)构成单个值。</p>
+<p>Access和SQL Server使用+号。DB2、Oracle、PostgreSQL、SQLite和Open Office Base使用||。在MySQL和MariaDB中，必须使用特殊的函数。</p>
+<p>许多数据库保存填充为列宽的文本值，而实际上你要的结果不需要这些空格。</p>
+<p>大多数DBMS都支持RTRIM()去掉字符串右边的空格、LTRIM()去掉字符串左边的空格、TRIM()去掉字符串左右两边的空格。</p>
+<p>&lt;!–￼1–&gt;</p>
+<p>## 执行算术计算</p>
+<p>&lt;!–￼2–&gt;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL通配符过滤/" data-id="ckrdkkky70001pki49kxc3x2x"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL创建计算字段/" data-id="ckrdkkkxy0000pki4iw6by6dx"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
@@ -85,19 +89,10 @@
     
   <nav class="article-nav">
     
-      <a href="/2021/07/21/SQL创建计算字段/" class="article-nav-link">
-        <strong class="article-nav-caption">Newer posts</strong>
-        <div class="article-nav-title">
-          
-            SQL创建计算字段
-          
-        </div>
-      </a>
     
-    
-      <a href="/2021/07/21/修改已提交到github的用户名和邮箱/" class="article-nav-link">
+      <a href="/2021/07/21/SQL通配符过滤/" class="article-nav-link">
         <strong class="article-nav-caption">Olde posts</strong>
-        <div class="article-nav-title">修改已提交到github的用户名和邮箱</div>
+        <div class="article-nav-title">SQL通配符过滤</div>
       </a>
     
   </nav>

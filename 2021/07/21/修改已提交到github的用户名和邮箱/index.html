@@ -68,7 +68,7 @@
 <p>但是对我而言行不通，可能是因为只有一次提交的原因。  </p>
 <p><img src="_v_images/20210721220002486_11487.png" alt="git rebaes -i HEAD~n"></p>
 <p>经过不断尝试，最终找到解决方案如下</p>
-<h3 id="1-查找提交记录"><a href="#1-查找提交记录" class="headerlink" title="1. 查找提交记录"></a>1. 查找提交记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">![git log](_v_images/20210721220239960_21106.png)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 2. 复制要修改的提交记录id  </span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 3. 进入提交记录  </span></span></span><br><span class="line">``` SHELL</span><br><span class="line">git reset --soft 9731ab6xxx</span><br></pre></td></tr></table></figure>
+<h3 id="1-查找提交记录"><a href="#1-查找提交记录" class="headerlink" title="1. 查找提交记录"></a>1. 查找提交记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">![git log](_v_images/20210721220239960_21106.png)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>## 2. 复制要修改的提交记录id  </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>## 3. 进入提交记录  </span><br><span class="line">``` SHELL</span><br><span class="line">git reset --soft 9731ab6xxx</span><br></pre></td></tr></table></figure>
 
 <p><img src="_v_images/20210721220520320_26231.png" alt="git reset --soft"></p>
 <h3 id="4-修改用户信息"><a href="#4-修改用户信息" class="headerlink" title="4. 修改用户信息"></a>4. 修改用户信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend --author='yourname &lt;youremail@email.com&gt;'</span><br></pre></td></tr></table></figure>
@@ -80,7 +80,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/修改已提交到github的用户名和邮箱/" data-id="ckrdkie080005dsi48cg7egd7"
+      <a data-url="http://xperblueray.com/2021/07/21/修改已提交到github的用户名和邮箱/" data-id="ckrdkkkye0004pki4rxwwcydb"
          class="article-share-link">Share</a>
       
     </footer>
