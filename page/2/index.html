@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   
@@ -12,13 +12,19 @@
   
     <link rel="shortcut icon" href="/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css">
   
-    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="stylesheet" href="/css/style.css">
+
   
-  <script src="/js/pace.min.js"></script>
-</head>
-</html>
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
 <body>
 <main class="content">
   <section class="jumbotron">
@@ -65,7 +71,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL更新和删除数据/">SQL更新和删除数据</a>
+      <a class="article-title" href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/">SQL更新和删除数据</a>
     </h2>
   
   
@@ -78,7 +84,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL更新和删除数据/" class="article-date">
+        <a href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -125,10 +131,78 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL更新和删除数据/" data-id="ckrdnuncj000p50i494w0gg5l"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n58000pksi4gxoymdz9"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        <article id="post-SQL联结表" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2021/07/21/SQL%E8%81%94%E7%BB%93%E8%A1%A8/">SQL联结表</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL%E8%81%94%E7%BB%93%E8%A1%A8/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <h2 id="联结"><a href="#联结" class="headerlink" title="联结"></a>联结</h2><p>SQL最强大的功能之一就是能在数据查询的执行中联结（join）表。<br>联结是利用SQL的SELECT能执行的最重要的操作。</p>
+<h3 id="关系表"><a href="#关系表" class="headerlink" title="关系表"></a>关系表</h3><h3 id="为什么使用联结"><a href="#为什么使用联结" class="headerlink" title="为什么使用联结"></a>为什么使用联结</h3><p>如果数据存储在多个表中，使用联结就可以用一条SELECT语句就检索出数据。<br>联结是一种机制，用来在一条SELECT语句中关联表，因此称为联结。</p>
+<h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- CREATE JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price <span class="keyword">FROM</span> Vendors, Products <span class="keyword">WHERE</span> Vendors.vend_id = Products.vend_id;</span><br></pre></td></tr></table></figure>
+
+<h3 id="WHERE子句的重要性"><a href="#WHERE子句的重要性" class="headerlink" title="WHERE子句的重要性"></a>WHERE子句的重要性</h3><p>所有联结都有WHERE子句。<br>返回笛卡尔积的链接，也称叉联结（cross join）;</p>
+<h3 id="内联结"><a href="#内联结" class="headerlink" title="内联结"></a>内联结</h3><p>基于两个表之间的相等测试，称为等值联结（equijoin）。这种联结也成为内联结（inner join）。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INNER JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price <span class="keyword">FROM</span> Vendors <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Products <span class="keyword">ON</span> Vendors.vend_id = Products.vend_id;</span><br></pre></td></tr></table></figure>
+
+<h3 id="联结多个表"><a href="#联结多个表" class="headerlink" title="联结多个表"></a>联结多个表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- JOIN MULTI TABLES</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, vend_name, prod_price, quantity <span class="keyword">FROM</span> OrderItems, Products, Vendors <span class="keyword">WHERE</span> Products.vend_id = Vendors.vend_id <span class="keyword">AND</span> OrderItems.prod_id = Products.prod_id <span class="keyword">AND</span> order_num = <span class="number">20007</span>;</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_id <span class="keyword">IN</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> cust_id <span class="keyword">from</span> Orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> OrderItems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers, Orders, OrderItems <span class="keyword">WHERE</span> Customers.cust_id = Orders.cust_id <span class="keyword">AND</span> Orders.order_num = OrderItems.order_num <span class="keyword">AND</span> prod_id = <span class="string">'RGAN01'</span>;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E8%81%94%E7%BB%93%E8%A1%A8/" data-id="ckrdp6n5a000tksi4kor84xur"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -151,7 +225,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL汇总数据/">SQL汇总数据</a>
+      <a class="article-title" href="/2021/07/21/SQL%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE/">SQL汇总数据</a>
     </h2>
   
   
@@ -164,7 +238,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL汇总数据/" class="article-date">
+        <a href="/2021/07/21/SQL%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -208,10 +282,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL汇总数据/" data-id="ckrdnuncn000t50i4a714g512"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n5c000wksi4g63ukwhz"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -234,7 +308,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL管理事务处理/">SQL管理事务处理</a>
+      <a class="article-title" href="/2021/07/21/SQL%E7%AE%A1%E7%90%86%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/">SQL管理事务处理</a>
     </h2>
   
   
@@ -247,7 +321,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL管理事务处理/" class="article-date">
+        <a href="/2021/07/21/SQL%E7%AE%A1%E7%90%86%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -307,10 +381,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL管理事务处理/" data-id="ckrdnuncp000w50i4vzehbmlp"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E7%AE%A1%E7%90%86%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/" data-id="ckrdp6n5f0010ksi4u5m4a5da"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -333,7 +407,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL组合查询/">SQL组合查询</a>
+      <a class="article-title" href="/2021/07/21/SQL%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2/">SQL组合查询</a>
     </h2>
   
   
@@ -346,7 +420,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL组合查询/" class="article-date">
+        <a href="/2021/07/21/SQL%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -388,10 +462,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL组合查询/" data-id="ckrdnuncr001050i49mign451"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2/" data-id="ckrdp6n6n001vksi4fp9rc6we"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -406,7 +480,7 @@
 
 
       
-        <article id="post-SQL联结表" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+        <article id="post-SQL使用子查询" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
     
@@ -414,7 +488,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL联结表/">SQL联结表</a>
+      <a class="article-title" href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL使用子查询</a>
     </h2>
   
   
@@ -427,7 +501,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL联结表/" class="article-date">
+        <a href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -444,89 +518,20 @@
       
 
       
-        <h2 id="联结"><a href="#联结" class="headerlink" title="联结"></a>联结</h2><p>SQL最强大的功能之一就是能在数据查询的执行中联结（join）表。<br>联结是利用SQL的SELECT能执行的最重要的操作。</p>
-<h3 id="关系表"><a href="#关系表" class="headerlink" title="关系表"></a>关系表</h3><h3 id="为什么使用联结"><a href="#为什么使用联结" class="headerlink" title="为什么使用联结"></a>为什么使用联结</h3><p>如果数据存储在多个表中，使用联结就可以用一条SELECT语句就检索出数据。<br>联结是一种机制，用来在一条SELECT语句中关联表，因此称为联结。</p>
-<h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- CREATE JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price <span class="keyword">FROM</span> Vendors, Products <span class="keyword">WHERE</span> Vendors.vend_id = Products.vend_id;</span><br></pre></td></tr></table></figure>
+        <h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p><strong>查询</strong>（query）任何SQL语句都是查询。但此术语一般指SELECT语句。<br>SQL还允许创建子查询（subquery），即嵌套在其它查询中的查询。</p>
+<h2 id="利用子查询进行过滤"><a href="#利用子查询进行过滤" class="headerlink" title="利用子查询进行过滤"></a>利用子查询进行过滤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FILTER BY SUBQUERY</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> cust_id <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> cust_id <span class="keyword">in</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> cust_id <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> orderitems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">	)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
-<h3 id="WHERE子句的重要性"><a href="#WHERE子句的重要性" class="headerlink" title="WHERE子句的重要性"></a>WHERE子句的重要性</h3><p>所有联结都有WHERE子句。<br>返回笛卡尔积的链接，也称叉联结（cross join）;</p>
-<h3 id="内联结"><a href="#内联结" class="headerlink" title="内联结"></a>内联结</h3><p>基于两个表之间的相等测试，称为等值联结（equijoin）。这种联结也成为内联结（inner join）。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INNER JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price <span class="keyword">FROM</span> Vendors <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Products <span class="keyword">ON</span> Vendors.vend_id = Products.vend_id;</span><br></pre></td></tr></table></figure>
-
-<h3 id="联结多个表"><a href="#联结多个表" class="headerlink" title="联结多个表"></a>联结多个表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- JOIN MULTI TABLES</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, vend_name, prod_price, quantity <span class="keyword">FROM</span> OrderItems, Products, Vendors <span class="keyword">WHERE</span> Products.vend_id = Vendors.vend_id <span class="keyword">AND</span> OrderItems.prod_id = Products.prod_id <span class="keyword">AND</span> order_num = <span class="number">20007</span>;</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_id <span class="keyword">IN</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> cust_id <span class="keyword">from</span> Orders <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> OrderItems <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span></span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers, Orders, OrderItems <span class="keyword">WHERE</span> Customers.cust_id = Orders.cust_id <span class="keyword">AND</span> Orders.order_num = OrderItems.order_num <span class="keyword">AND</span> prod_id = <span class="string">'RGAN01'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>作为子查询的SELECT语句只能查询单个列。企图检索多个列将返回错误。</p>
+</blockquote>
+<h2 id="作为计算字段使用子查询"><a href="#作为计算字段使用子查询" class="headerlink" title="作为计算字段使用子查询"></a>作为计算字段使用子查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- USE SUBQUERY AS CALCULATE FIELD</span></span><br><span class="line"><span class="keyword">SELECT</span> *, (<span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">FROM</span> orders o <span class="keyword">WHERE</span> o.cust_id = c.cust_id) <span class="keyword">AS</span> cust_order_num <span class="keyword">FROM</span> customers c; <span class="comment">-- DIY</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_state, (<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> Orders.cust_id = Customers.cust_id) <span class="keyword">AS</span> orders <span class="keyword">FROM</span> Customers <span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_name;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL联结表/" data-id="ckrdnuncs001350i4toytqmjl"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2/" data-id="ckrdp6n4b0000ksi4dcd1i2x2"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-
-
-
-      
-        <article id="post-SQL使用数据处理函数" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL使用数据处理函数/">SQL使用数据处理函数</a>
-    </h2>
-  
-  
-
-
-
-
-      </header>
-    
-
-    
-      <div class="article-meta">
-        <a href="/2021/07/21/SQL使用数据处理函数/" class="article-date">
-  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
-</a>
-        
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/SQL/">SQL</a>
-  </div>
-
-      </div>
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-
-      
-
-      
-        <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><img src="/images/20190524144953320_24174.png" alt="DBMS函数的差异"></p>
-<h2 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h2><h3 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h3><p><img src="/images/20190524145958787_19315.png" alt="常用的文本处理函数"><br>SOUNDEX是一个将任何文本串转换为描述其语音表示的字幕数字模式的算法。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, <span class="keyword">UPPER</span>(vend_name) <span class="keyword">AS</span> vend_name_upcase <span class="keyword">FROM</span> Vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_contact = <span class="string">'Michael Green'</span>;  <span class="comment">-- 联系名错误，实际上应该是Michael Green</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> <span class="keyword">SOUNDEX</span>(cust_contact) = <span class="string">'Michael Green'</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DATE AND TIME FUNCTION</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">DATEPART</span>(yy, order_date) = <span class="number">2012</span>;  <span class="comment">-- SQL Server 适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">DATEPART</span>(<span class="string">'yyyy'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- Access适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> DATE_PART(<span class="string">'year'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- PostgreSQL适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> to_number(to_char(order_date, <span class="string">'YYYY'</span>)) = <span class="number">2012</span>; <span class="comment">-- Oracle适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> order_date <span class="keyword">BETWEEN</span> <span class="keyword">to_date</span>(<span class="string">'01-01-2012'</span>) <span class="keyword">AND</span> <span class="keyword">to_date</span>(<span class="string">'12-31-2012'</span>); <span class="comment">-- Oracle</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">YEAR</span>(order_date) = <span class="number">2012</span>; <span class="comment">-- MySQL 和MariaDB适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> strfime(<span class="string">'%Y'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- SQLite</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h3><p>在主要DBMS的函数中，数值函数是最一致、最统一的函数。<br><img src="/images/20190524152132600_3337.png" alt="常用数值处理函数"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL使用数据处理函数/" data-id="ckrdnunbd000050i4gqnske9h"
-         class="article-share-link">Share</a>
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -549,7 +554,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL高级SQL特性/">SQL高级SQL特性</a>
+      <a class="article-title" href="/2021/07/21/SQL%E9%AB%98%E7%BA%A7SQL%E7%89%B9%E6%80%A7/">SQL高级SQL特性</a>
     </h2>
   
   
@@ -562,7 +567,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL高级SQL特性/" class="article-date">
+        <a href="/2021/07/21/SQL%E9%AB%98%E7%BA%A7SQL%E7%89%B9%E6%80%A7/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -647,10 +652,94 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL高级SQL特性/" data-id="ckrdnund4001a50i4uf8u6kxi"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E9%AB%98%E7%BA%A7SQL%E7%89%B9%E6%80%A7/" data-id="ckrdp6n6u001yksi4ig7suytl"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL基础/">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL必知必会/">SQL必知必会</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        <article id="post-SQL插入数据" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/">SQL插入数据</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>INSERT用来将行插入（或添加）到数据库。插入有几种方式：</p>
+<ul>
+<li>插入完整的行</li>
+<li>插入行的一部分</li>
+<li>插入某些查询的结果</li>
+</ul>
+<h3 id="插入完整的行"><a href="#插入完整的行" class="headerlink" title="插入完整的行"></a>插入完整的行</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT ROW</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers <span class="keyword">VALUES</span>(<span class="string">'1000000006'</span>,</span><br><span class="line"><span class="string">'Toy Land'</span>,</span><br><span class="line"><span class="string">'123 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'11111'</span>,</span><br><span class="line"><span class="string">'USA'</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email) <span class="keyword">VALUES</span>(<span class="string">'100000007'</span>,</span><br><span class="line"><span class="string">'Tony Stark'</span>,</span><br><span class="line"><span class="string">'345 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'22222'</span>,</span><br><span class="line"><span class="string">'USA'</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入部分行"><a href="#插入部分行" class="headerlink" title="插入部分行"></a>插入部分行</h3><p>省略的行必须满足一下某个条件：</p>
+<ul>
+<li>该列定义为允许NULL值</li>
+<li>在表中给出默认值<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country) <span class="keyword">VALUES</span>(<span class="string">'100000008'</span>,</span><br><span class="line"><span class="string">'Spiderman'</span>,</span><br><span class="line"><span class="string">'345 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'22222'</span>,</span><br><span class="line"><span class="string">'USA'</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="插入检索出的数据"><a href="#插入检索出的数据" class="headerlink" title="插入检索出的数据"></a>插入检索出的数据</h3><p>INSERT SELECT中不一定要求列名匹配。它使用的是列的位置。INSERT SELECT可以插入多行。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT SELECT</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country)</span><br><span class="line"><span class="keyword">SELECT</span> cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country</span><br><span class="line"><span class="keyword">FROM</span> CustNew;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从一个表复制到另一个表"><a href="#从一个表复制到另一个表" class="headerlink" title="从一个表复制到另一个表"></a>从一个表复制到另一个表</h2><p>要将一个表的内容复制到一个全新的表（运行中创建的表），可以使用SELECT INTO语句。<br>INSERT SELECT与SELECT INTO之间的一个重要差别是前者到处数据，后者导入数据。<br>在使用SELECT INTO时，需要注意：</p>
+<ul>
+<li>任何SELECT选项和子句都可以使用，包括WHERE和GROUP BY;</li>
+<li>可利用联结从多个表插入数据</li>
+<li>不管从多少个表中检索数据，数据都只能插入一个表中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n56000mksi4hox8a304"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -673,7 +762,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/修改已提交到github的用户名和邮箱/">修改已提交到github的用户名和邮箱</a>
+      <a class="article-title" href="/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/">修改已提交到github的用户名和邮箱</a>
     </h2>
   
   
@@ -686,7 +775,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/修改已提交到github的用户名和邮箱/" class="article-date">
+        <a href="/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/" class="article-date">
   <time datetime="2021-07-21T13:44:59.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -725,10 +814,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/修改已提交到github的用户名和邮箱/" data-id="ckrdnund6001e50i4zkwgwfn9"
+      <a data-url="http://xperblueray.com/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/" data-id="ckrdp6n6p001wksi4rhiobj4w"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/" rel="tag">github</a></li></ul>
 
     </footer>
 
@@ -769,7 +858,7 @@
     <ul class="list-inline">
       <li>&copy; 2021 星空</li>
       <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
-      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
     </ul>
   </div>
 </footer>
@@ -835,20 +924,30 @@
 </div>
 </div>
 </aside>
+
 <script src="/js/jquery-2.0.3.min.js"></script>
+
+
 <script src="/js/lazyload.min.js"></script>
+
+
 <script src="/js/snap.svg-min.js"></script>
+
+
 <script src="/js/busuanzi-2.3.pure.min.js"></script>
 
 
-  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
-  <script src="/js/search.js"></script>
+
 
 
 <script src="/js/ocean.js"></script>
+
 
 </body>
 </html>
