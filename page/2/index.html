@@ -46,7 +46,7 @@
     </div>
     <div class="video-inner text-center text-white">
       <h1><a href="/">星空</a></h1>
-      <p>好好活下去</p>
+      <p>好好吃饭，好好睡觉</p>
       <div><img src="/images/hexo-inverted.svg" class="brand" alt="星空"></div>
     </div>
     <div class="video-learn-more">
@@ -63,7 +63,7 @@
 
     
       
-        <article id="post-SQL更新和删除数据" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+        <article id="post-SQL使用视图" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
     
@@ -71,7 +71,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/">SQL更新和删除数据</a>
+      <a class="article-title" href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/">SQL使用视图</a>
     </h2>
   
   
@@ -84,7 +84,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" class="article-date">
+        <a href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -101,37 +101,44 @@
       
 
       
-        <p>利用UPDATE和DELETE语法进一步操作表数据</p>
-<h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><p>两种使用UPDATE的方式：</p>
-<ul>
-<li>更新表中的特定行</li>
-<li>更新表中的所有行<br>基本的UPDATE语句由三部分组成，分别是：</li>
-<li>要更新的表</li>
-<li>列名和它们的新值</li>
-<li>确定要更新哪些行的过滤条件<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UPDATE</span></span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_email = <span class="string">'kim@thetoystore.com'</span> <span class="keyword">WHERE</span> cust_id = <span class="string">'1000000005'</span>; <span class="comment">-- UPDATE SINGLE COLUMN</span></span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_contact = <span class="string">'Sam Roberts'</span>, cust_email = <span class="string">'sam@toyland.com'</span> <span class="keyword">WHERE</span> cust_id = <span class="string">'1000000006'</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_email=<span class="literal">NULL</span> <span class="keyword">WHERE</span> cust_id=<span class="string">'1000000005'</span>;</span><br></pre></td></tr></table></figure>
+        <h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图是虚拟的表。视图只包含使用时动态检索数据的查询。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- VIEW</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers, Orders, OrderItems <span class="keyword">WHERE</span> Customers.cust_id = Orders.cust_id <span class="keyword">AND</span> OrderItems.order_num = Orders.order_num <span class="keyword">AND</span> prod_id = <span class="string">'RGAN01'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> ProductCustomers <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span>;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><p>使用DELETE的两种方法：</p>
+<h3 id="为什么使用视图"><a href="#为什么使用视图" class="headerlink" title="为什么使用视图"></a>为什么使用视图</h3><p>视图的一些常见应用：</p>
 <ul>
-<li>从表中删除特定的行</li>
-<li>从表中删除所有的行<br>如果想从表中删除所有行，不要使用DELETE。可使用TRUNCATE TABLE语句，它完成相同的动作，而且速度更快。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DELETE</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_id=<span class="string">'1000000006'</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>重用SQL语句</li>
+<li>简化复杂的SQL操作。</li>
+<li>使用表的一部分而不是整个表</li>
+<li>保护数据。可以授权用户访问表的特定部分的权限，而不是整个表的访问权限。</li>
+<li>更改数据格式和表示</li>
 </ul>
-<h2 id="更新和删除的指导原则"><a href="#更新和删除的指导原则" class="headerlink" title="更新和删除的指导原则"></a>更新和删除的指导原则</h2><p>使用UPDATE或DELETE时所遵循的重要原则：</p>
+<h3 id="视图的规则与限制"><a href="#视图的规则与限制" class="headerlink" title="视图的规则与限制"></a>视图的规则与限制</h3><p>视图创建和使用的一些最常见的规则和限制：</p>
 <ul>
-<li>除非确实打算更新和删除每一行，否则绝对不要使用不带WHERE子句的UPDATE或DELETE语句。</li>
-<li>保证每个表都有主键</li>
-<li>在UPDAET或DELETE 语句使用WHERE子句前，应该先用SELECT进行测试，保证它过滤的是正确的记录</li>
-<li>使用强制实施引用完整性的数据库，这样DBMS将不允许删除其数据与其他表相关联的行</li>
-<li>有的DBMS允许数据库管理员施加约束，防止执行不带WHERE子句的UPDATE或DELETE 语句。</li>
+<li>与表一样，视图必须唯一命名</li>
+<li>对于可以创建的视图数目没有限制</li>
+<li>创建视图，必须具有足够的访问权限</li>
+<li>视图可以嵌套，即可以利用从其他视图中检索数据的查询来构造视图</li>
+<li>许多DBMS禁止在视图查询中使用ORDER BY子句</li>
+<li>有些DBMS要求对返回的列进行命名，如果列是计算字段，则需要使用别名</li>
+<li>视图不能索引，也不能有关联的触发器或默认值</li>
+<li>有些DBMS把视图作为只读的查询，这表示可以从试图检索数据，但不能将数据写回底层表</li>
+<li>有些DBMS允许创建这样的视图，它不能进行导致行不再属于视图的插入或更新。</li>
 </ul>
+<h2 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h2><p>视图用CREATE VIEW语句来创建。<br>删除视图，可以使用DROP语句，其语法为DROP VIEW viewname.</p>
+<h3 id="利用视图简化复杂的联结"><a href="#利用视图简化复杂的联结" class="headerlink" title="利用视图简化复杂的联结"></a>利用视图简化复杂的联结</h3><p>一个最常见的视图应该是隐藏复杂的SQL，这通常涉及联结。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- CREATE VIEW</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> ProductCustomers <span class="keyword">AS</span> <span class="keyword">SELECT</span> cust_name, cust_contact, prod_id <span class="keyword">FROM</span> Customers, Orders, OrderItems <span class="keyword">WHERE</span> Customers.cust_id = Orders.cust_id <span class="keyword">AND</span> OrderItems.order_num = Orders.order_num; <span class="comment">-- CREATE VIEW</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> ProductCustomers <span class="keyword">WHERE</span> prod_id = <span class="string">'RGAN01'</span>; <span class="comment">-- SELECT FROM VIEW</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="用视图重新格式化检索出的"><a href="#用视图重新格式化检索出的" class="headerlink" title="用视图重新格式化检索出的"></a>用视图重新格式化检索出的</h3><p>视图的另一常见用途是重新格式化检索出的数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FORMAT DATA</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RTRIM</span>(vend_name) + <span class="string">'（'</span> + <span class="keyword">RTRIM</span>(vend_country) + <span class="string">'）'</span> <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> Vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RTRIM</span>(vend_name) || <span class="string">'（'</span> || <span class="keyword">RTRIM</span>(vend_country) || <span class="string">'）'</span> <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> Vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> VendorsLocations <span class="keyword">AS</span> <span class="keyword">SELECT</span> <span class="keyword">RTRIM</span>(vend_name) + <span class="string">'（'</span> + <span class="keyword">RTRIM</span>(vend_country) + <span class="string">'）'</span> <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> Vendors;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> VendorsLocations <span class="keyword">AS</span> <span class="keyword">SELECT</span> <span class="keyword">RTRIM</span>(vend_name) || <span class="string">'（'</span> || <span class="keyword">RTRIM</span>(vend_country) || <span class="string">'）'</span> <span class="keyword">AS</span> vend_title <span class="keyword">FROM</span> Vendors;</span><br></pre></td></tr></table></figure>
+
+<h3 id="用视图过滤不想要的数据"><a href="#用视图过滤不想要的数据" class="headerlink" title="用视图过滤不想要的数据"></a>用视图过滤不想要的数据</h3><p>视图对于应用哦个普通的WHERE子句也很有用。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FILTER NOT NEED DATA USE VIEW</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> CustomerEMailList <span class="keyword">AS</span> <span class="keyword">SELECT</span> cust_id, cust_name, cust_email <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_email <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> CustomerEMailList;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用视图与计算字段"><a href="#使用视图与计算字段" class="headerlink" title="使用视图与计算字段"></a>使用视图与计算字段</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- USE VIEW AND CALCULATE FIELD</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, quantity, item_price, quantity*item_price <span class="keyword">AS</span> expanded_price <span class="keyword">FROM</span> OrderItems <span class="keyword">WHERE</span> order_num = <span class="number">20008</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> OrderItemsExpanded <span class="keyword">AS</span> <span class="keyword">SELECT</span> order_num, prod_id, quantity, item_price, quantity*item_price <span class="keyword">AS</span> expanded_price <span class="keyword">FROM</span> OrderItems;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> OrderItemsExpanded <span class="keyword">WHERE</span> order_num=<span class="number">20008</span>;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n58000pksi4gxoymdz9"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/" data-id="ckrdp6n4h0001ksi496lmeb1u"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
@@ -670,7 +677,7 @@
 
 
       
-        <article id="post-SQL插入数据" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+        <article id="post-SQL使用游标" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
     
@@ -678,7 +685,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/">SQL插入数据</a>
+      <a class="article-title" href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87/">SQL使用游标</a>
     </h2>
   
   
@@ -691,7 +698,7 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" class="article-date">
+        <a href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87/" class="article-date">
   <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
@@ -708,35 +715,46 @@
       
 
       
-        <p>INSERT用来将行插入（或添加）到数据库。插入有几种方式：</p>
+        <h2 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h2><p><strong>结果集</strong> SQL查询所检索出的结果。<br>有时需要在检索出来的行中前进或者后退一行或多行，这就是游标的用途所在。<br><strong>游标</strong>是一个存储在DBMS服务器上的数据库查询，它不是一条SELECT语句，而是被该语句检索出来的结果集。<br>游标常见的一些选项和特性如下：</p>
 <ul>
-<li>插入完整的行</li>
-<li>插入行的一部分</li>
-<li>插入某些查询的结果</li>
+<li>能够标记游标为只读，使数据能读取，但不能更新和删除</li>
+<li>能控制可以执行的定向操作（向前、向后、第一、绝对位置、相对位置等）</li>
+<li>能标记某些列为可编辑的，某些列为不可编辑的</li>
+<li>规定范围，使游标对创建它的特定请求（如存储过程）或对所有请求可访问</li>
+<li>只是DBMS对检索出的数据（而不是指出表中活动数据）进行复制，使数据在游标打开和访问期间不变化</li>
 </ul>
-<h3 id="插入完整的行"><a href="#插入完整的行" class="headerlink" title="插入完整的行"></a>插入完整的行</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT ROW</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers <span class="keyword">VALUES</span>(<span class="string">'1000000006'</span>,</span><br><span class="line"><span class="string">'Toy Land'</span>,</span><br><span class="line"><span class="string">'123 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'11111'</span>,</span><br><span class="line"><span class="string">'USA'</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email) <span class="keyword">VALUES</span>(<span class="string">'100000007'</span>,</span><br><span class="line"><span class="string">'Tony Stark'</span>,</span><br><span class="line"><span class="string">'345 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'22222'</span>,</span><br><span class="line"><span class="string">'USA'</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="插入部分行"><a href="#插入部分行" class="headerlink" title="插入部分行"></a>插入部分行</h3><p>省略的行必须满足一下某个条件：</p>
+<h2 id="使用游标"><a href="#使用游标" class="headerlink" title="使用游标"></a>使用游标</h2><p>使用游标涉及几个明确的步骤：</p>
 <ul>
-<li>该列定义为允许NULL值</li>
-<li>在表中给出默认值<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country) <span class="keyword">VALUES</span>(<span class="string">'100000008'</span>,</span><br><span class="line"><span class="string">'Spiderman'</span>,</span><br><span class="line"><span class="string">'345 Any Street'</span>,</span><br><span class="line"><span class="string">'New York'</span>,</span><br><span class="line"><span class="string">'NY'</span>,</span><br><span class="line"><span class="string">'22222'</span>,</span><br><span class="line"><span class="string">'USA'</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>在使用游标前，必须声明（定义）它</li>
+<li>一旦声明，就必须打开游标以供使用</li>
+<li>对于填有数据的游标，根据需要取出（检索）各行</li>
+<li>在结束游标使用时，必须关闭游标，可以的话，释放游标</li>
 </ul>
-<h3 id="插入检索出的数据"><a href="#插入检索出的数据" class="headerlink" title="插入检索出的数据"></a>插入检索出的数据</h3><p>INSERT SELECT中不一定要求列名匹配。它使用的是列的位置。INSERT SELECT可以插入多行。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT SELECT</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country)</span><br><span class="line"><span class="keyword">SELECT</span> cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country</span><br><span class="line"><span class="keyword">FROM</span> CustNew;</span><br></pre></td></tr></table></figure>
+<h3 id="创建游标"><a href="#创建游标" class="headerlink" title="创建游标"></a>创建游标</h3><p>使用DELAERE语句创建游标</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- CREATE CURSOR</span></span><br><span class="line"><span class="keyword">DECLARE</span> CustCursor <span class="keyword">CURSOR</span> </span><br><span class="line"><span class="keyword">FOR</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> cust_email <span class="keyword">IS</span> <span class="literal">NULL</span> <span class="comment">-- DB2 MariaDB MySQL SQL Server</span></span><br><span class="line"><span class="keyword">DECLARE</span> <span class="keyword">CURSOR</span> CustCursor</span><br><span class="line"><span class="keyword">IS</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> cust_email <span class="keyword">IS</span> <span class="literal">NULL</span> <span class="comment">-- Oracle PostgreSQL</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="从一个表复制到另一个表"><a href="#从一个表复制到另一个表" class="headerlink" title="从一个表复制到另一个表"></a>从一个表复制到另一个表</h2><p>要将一个表的内容复制到一个全新的表（运行中创建的表），可以使用SELECT INTO语句。<br>INSERT SELECT与SELECT INTO之间的一个重要差别是前者到处数据，后者导入数据。<br>在使用SELECT INTO时，需要注意：</p>
-<ul>
-<li>任何SELECT选项和子句都可以使用，包括WHERE和GROUP BY;</li>
-<li>可利用联结从多个表插入数据</li>
-<li>不管从多少个表中检索数据，数据都只能插入一个表中</li>
-</ul>
+<h3 id="使用游标-1"><a href="#使用游标-1" class="headerlink" title="使用游标"></a>使用游标</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UTILIZE CURSOR</span></span><br><span class="line">OPEN CURSOR CustCursor</span><br></pre></td></tr></table></figure>
+
+<p>FETCH可以访问游标数据。FETCH指出要检索哪些行，从何处检索它们以及将它们放于何处（如变量名）。<br>使用Oracle语法从游标检索一行（第一行）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> <span class="keyword">TYPE</span> CustCursor <span class="keyword">IS</span> <span class="keyword">REF</span></span><br><span class="line"><span class="keyword">CURSOR</span></span><br><span class="line">	<span class="keyword">RETURN</span> Customers%ROWTYPE;</span><br><span class="line"><span class="keyword">DECLARE</span> CustRecord</span><br><span class="line">Customres%ROWTYPE</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">OPEN</span> CustCursor;</span><br><span class="line">	FETCH CustCursor INTO CustRecord;</span><br><span class="line">	CLOSE CustCursor;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用Oracle语法，从第一行到最后一行，对检索出来的数据进行循环：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> <span class="keyword">TYPE</span> CustCursor <span class="keyword">IS</span> <span class="keyword">REF</span></span><br><span class="line"><span class="keyword">CURSOR</span></span><br><span class="line">    <span class="keyword">RETURN</span> Customers%ROWTYPE;</span><br><span class="line"><span class="keyword">DECLARE</span> CustRecord</span><br><span class="line">Customers%ROWTYPE</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="keyword">OPEN</span> CustCursor;</span><br><span class="line">    LOOP</span><br><span class="line">    FETCH CustCursor INTO CustRecord;</span><br><span class="line">    EXIT WHEN CustCursor%NOTFOUND;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line">    CLOSE CustCursor;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用SQL Server</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @cust_id <span class="built_in">CHAR</span>(<span class="number">10</span>),</span><br><span class="line">	@cust_name <span class="built_in">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">	@cust_address <span class="built_in">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">	@cust_city <span class="built_in">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">	@cust_state <span class="built_in">CHAR</span>(<span class="number">5</span>),</span><br><span class="line">	@cust_zip <span class="built_in">CHAR</span>(<span class="number">10</span>),</span><br><span class="line">	@cust_country <span class="built_in">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">	@cust_contact <span class="built_in">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">	@cust_email <span class="built_in">CHAR</span>(<span class="number">255</span>)</span><br><span class="line"><span class="keyword">OPEN</span> CustCursor</span><br><span class="line"><span class="keyword">FETCH</span> <span class="keyword">NEXT</span> <span class="keyword">FROM</span> CustCursor</span><br><span class="line"><span class="keyword">INTO</span> @cust_id, @cust_name, @cust_address, @cust_city, @cust_state,</span><br><span class="line">@cust_zip, @cust_couontry, @cust_contact, @cust_email</span><br><span class="line"><span class="keyword">WHILE</span> @@FETCH_STATUS = <span class="number">0</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"><span class="keyword">FETCH</span> <span class="keyword">NEXT</span> <span class="keyword">FROM</span> CustCursor</span><br><span class="line">	<span class="keyword">INTO</span> @cust_id, @cust_name, @cust_address, @cust_city, @cust_state, </span><br><span class="line">	@cust_zip, @cust_coruntry, @cust_contact, @cust_email</span><br><span class="line"><span class="keyword">END</span></span><br><span class="line"><span class="keyword">CLOSE</span> CustCursor</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭游标"><a href="#关闭游标" class="headerlink" title="关闭游标"></a>关闭游标</h3><p>DB2、 Oracle和PostgreSQL的语法关闭游标：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CLOSE CustCursor</span><br></pre></td></tr></table></figure>
+
+<p>SQL Server</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CLOSE CustCursor</span><br><span class="line"><span class="keyword">DEALLOCATE</span> <span class="keyword">CURSOR</span> CustCursor</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n56000mksi4hox8a304"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%B8%B8%E6%A0%87/" data-id="ckrdp6n4m0004ksi4xod7k8u9"
          class="article-share-link">Share</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
@@ -754,7 +772,7 @@
 
 
       
-        <article id="post-修改已提交到github的用户名和邮箱" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+        <article id="post-SQL使用数据处理函数" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
     
@@ -762,7 +780,7 @@
         
   
     <h2 itemprop="name">
-      <a class="article-title" href="/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/">修改已提交到github的用户名和邮箱</a>
+      <a class="article-title" href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">SQL使用数据处理函数</a>
     </h2>
   
   
@@ -775,12 +793,12 @@
 
     
       <div class="article-meta">
-        <a href="/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/" class="article-date">
-  <time datetime="2021-07-21T13:44:59.000Z" itemprop="datePublished">2021-07-21</time>
+        <a href="/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
 </a>
         
   <div class="article-category">
-    <a class="article-category-link" href="/categories/github/">github</a>
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
   </div>
 
       </div>
@@ -792,32 +810,107 @@
       
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近在家用的是老婆的电脑，经常在提交代码的时候发现author是她的名字。由此引出今天的问题</p>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><p>查询诸多资料，有推荐使用  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~n  // n为提交次数</span><br></pre></td></tr></table></figure>
+        <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><img src="/images/20190524144953320_24174.png" alt="DBMS函数的差异"></p>
+<h2 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h2><h3 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h3><p><img src="/images/20190524145958787_19315.png" alt="常用的文本处理函数"><br>SOUNDEX是一个将任何文本串转换为描述其语音表示的字幕数字模式的算法。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, <span class="keyword">UPPER</span>(vend_name) <span class="keyword">AS</span> vend_name_upcase <span class="keyword">FROM</span> Vendors <span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_contact = <span class="string">'Michael Green'</span>;  <span class="comment">-- 联系名错误，实际上应该是Michael Green</span></span><br><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> <span class="keyword">SOUNDEX</span>(cust_contact) = <span class="string">'Michael Green'</span>;</span><br></pre></td></tr></table></figure>
 
-<p>但是对我而言行不通，可能是因为只有一次提交的原因。  </p>
-<p><img src="/images/20210721220002486_11487.png" alt="git rebaes -i HEAD~n"></p>
-<p>经过不断尝试，最终找到解决方案如下</p>
-<h3 id="1-查找提交记录"><a href="#1-查找提交记录" class="headerlink" title="1. 查找提交记录"></a>1. 查找提交记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<h3 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DATE AND TIME FUNCTION</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">DATEPART</span>(yy, order_date) = <span class="number">2012</span>;  <span class="comment">-- SQL Server 适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">DATEPART</span>(<span class="string">'yyyy'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- Access适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> DATE_PART(<span class="string">'year'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- PostgreSQL适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> to_number(to_char(order_date, <span class="string">'YYYY'</span>)) = <span class="number">2012</span>; <span class="comment">-- Oracle适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> order_date <span class="keyword">BETWEEN</span> <span class="keyword">to_date</span>(<span class="string">'01-01-2012'</span>) <span class="keyword">AND</span> <span class="keyword">to_date</span>(<span class="string">'12-31-2012'</span>); <span class="comment">-- Oracle</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> <span class="keyword">YEAR</span>(order_date) = <span class="number">2012</span>; <span class="comment">-- MySQL 和MariaDB适用</span></span><br><span class="line"><span class="keyword">SELECT</span> order_num <span class="keyword">FROM</span> Orders <span class="keyword">WHERE</span> strfime(<span class="string">'%Y'</span>, order_date) = <span class="number">2012</span>; <span class="comment">-- SQLite</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/20210721220239960_21106.png" alt="git log"></p>
-<h3 id="2-复制要修改的提交记录id"><a href="#2-复制要修改的提交记录id" class="headerlink" title="2. 复制要修改的提交记录id"></a>2. 复制要修改的提交记录id</h3><h3 id="3-进入提交记录"><a href="#3-进入提交记录" class="headerlink" title="3. 进入提交记录"></a>3. 进入提交记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --soft 9731ab6xxx</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/20210721220520320_26231.png" alt="git reset --soft"></p>
-<h3 id="4-修改用户信息"><a href="#4-修改用户信息" class="headerlink" title="4. 修改用户信息"></a>4. 修改用户信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend --author='yourname &lt;youremail@email.com&gt;'</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-退出编辑，vim使用-q退出"><a href="#5-退出编辑，vim使用-q退出" class="headerlink" title="5. 退出编辑，vim使用:q退出"></a>5. 退出编辑，vim使用:q退出</h3><h3 id="6-提交、"><a href="#6-提交、" class="headerlink" title="6. 提交、"></a>6. 提交、</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --force --all</span><br></pre></td></tr></table></figure>
-
-<p>问题到这里就修复了。</p>
+<h3 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h3><p>在主要DBMS的函数中，数值函数是最一致、最统一的函数。<br><img src="/images/20190524152132600_3337.png" alt="常用数值处理函数"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xperblueray.com/2021/07/21/%E4%BF%AE%E6%94%B9%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%88%B0github%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1/" data-id="ckrdp6n6p001wksi4rhiobj4w"
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/" data-id="ckrdp6n4n0005ksi4zvythd9k"
          class="article-share-link">Share</a>
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/" rel="tag">github</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+
+
+
+      
+        <article id="post-SQL更新和删除数据" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/">SQL更新和删除数据</a>
+    </h2>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time datetime="2021-07-21T14:16:16.000Z" itemprop="datePublished">2021-07-21</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>利用UPDATE和DELETE语法进一步操作表数据</p>
+<h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><p>两种使用UPDATE的方式：</p>
+<ul>
+<li>更新表中的特定行</li>
+<li>更新表中的所有行<br>基本的UPDATE语句由三部分组成，分别是：</li>
+<li>要更新的表</li>
+<li>列名和它们的新值</li>
+<li>确定要更新哪些行的过滤条件<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UPDATE</span></span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_email = <span class="string">'kim@thetoystore.com'</span> <span class="keyword">WHERE</span> cust_id = <span class="string">'1000000005'</span>; <span class="comment">-- UPDATE SINGLE COLUMN</span></span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_contact = <span class="string">'Sam Roberts'</span>, cust_email = <span class="string">'sam@toyland.com'</span> <span class="keyword">WHERE</span> cust_id = <span class="string">'1000000006'</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> Customers <span class="keyword">SET</span> cust_email=<span class="literal">NULL</span> <span class="keyword">WHERE</span> cust_id=<span class="string">'1000000005'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><p>使用DELETE的两种方法：</p>
+<ul>
+<li>从表中删除特定的行</li>
+<li>从表中删除所有的行<br>如果想从表中删除所有行，不要使用DELETE。可使用TRUNCATE TABLE语句，它完成相同的动作，而且速度更快。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DELETE</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> cust_id=<span class="string">'1000000006'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="更新和删除的指导原则"><a href="#更新和删除的指导原则" class="headerlink" title="更新和删除的指导原则"></a>更新和删除的指导原则</h2><p>使用UPDATE或DELETE时所遵循的重要原则：</p>
+<ul>
+<li>除非确实打算更新和删除每一行，否则绝对不要使用不带WHERE子句的UPDATE或DELETE语句。</li>
+<li>保证每个表都有主键</li>
+<li>在UPDAET或DELETE 语句使用WHERE子句前，应该先用SELECT进行测试，保证它过滤的是正确的记录</li>
+<li>使用强制实施引用完整性的数据库，这样DBMS将不允许删除其数据与其他表相关联的行</li>
+<li>有的DBMS允许数据库管理员施加约束，防止执行不带WHERE子句的UPDATE或DELETE 语句。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/07/21/SQL%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE/" data-id="ckrdp6n58000pksi4gxoymdz9"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%9F%BA%E7%A1%80/" rel="tag">SQL基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="tag">SQL必知必会</a></li></ul>
 
     </footer>
 
@@ -838,7 +931,7 @@
   
     <nav class="page-nav">
       
-      <a class="extend prev" rel="prev" href="/">Prev page</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">Prev page</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next page</a>
     </nav>
   
 </section>

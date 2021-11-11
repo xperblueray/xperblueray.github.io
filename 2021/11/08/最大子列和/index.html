@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    最大子列和 |
+    
+    星空</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-最大子列和" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最大子列和
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/11/08/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97%E5%92%8C/" class="article-date">
+  <time datetime="2021-11-08T14:16:16.000Z" itemprop="datePublished">2021-11-08</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>INSERT用来将行插入（或添加）到数据库。插入有几种方式：</p>
+<ul>
+<li>插入完整的行</li>
+<li>插入行的一部分</li>
+<li>插入某些查询的结果</li>
+</ul>
+<h3 id="插入完整的行"><a href="#插入完整的行" class="headerlink" title="插入完整的行"></a>插入完整的行</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT ROW</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers <span class="keyword">VALUES</span>(<span class="string">&#x27;1000000006&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;Toy Land&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;123 Any Street&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;New York&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;NY&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;11111&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;USA&#x27;</span>,</span><br><span class="line"><span class="keyword">NULL</span>,</span><br><span class="line"><span class="keyword">NULL</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email) <span class="keyword">VALUES</span>(<span class="string">&#x27;100000007&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;Tony Stark&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;345 Any Street&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;New York&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;NY&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;22222&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;USA&#x27;</span>,</span><br><span class="line"><span class="keyword">NULL</span>,</span><br><span class="line"><span class="keyword">NULL</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="插入部分行"><a href="#插入部分行" class="headerlink" title="插入部分行"></a>插入部分行</h3><p>省略的行必须满足一下某个条件：</p>
+<ul>
+<li>该列定义为允许NULL值</li>
+<li>在表中给出默认值<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country) <span class="keyword">VALUES</span>(<span class="string">&#x27;100000008&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;Spiderman&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;345 Any Street&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;New York&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;NY&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;22222&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;USA&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="插入检索出的数据"><a href="#插入检索出的数据" class="headerlink" title="插入检索出的数据"></a>插入检索出的数据</h3>INSERT SELECT中不一定要求列名匹配。它使用的是列的位置。INSERT SELECT可以插入多行。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- INSERT SELECT</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers(cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_email,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country)</span><br><span class="line"><span class="keyword">SELECT</span> cust_id,</span><br><span class="line">cust_contact,</span><br><span class="line">cust_name,</span><br><span class="line">cust_address,</span><br><span class="line">cust_city,</span><br><span class="line">cust_state,</span><br><span class="line">cust_zip,</span><br><span class="line">cust_country</span><br><span class="line"><span class="keyword">FROM</span> CustNew;</span><br></pre></td></tr></table></figure>
+<h2 id="从一个表复制到另一个表"><a href="#从一个表复制到另一个表" class="headerlink" title="从一个表复制到另一个表"></a>从一个表复制到另一个表</h2>要将一个表的内容复制到一个全新的表（运行中创建的表），可以使用SELECT INTO语句。<br>INSERT SELECT与SELECT INTO之间的一个重要差别是前者到处数据，后者导入数据。<br>在使用SELECT INTO时，需要注意：</li>
+<li>任何SELECT选项和子句都可以使用，包括WHERE和GROUP BY;</li>
+<li>可利用联结从多个表插入数据</li>
+<li>不管从多少个表中检索数据，数据都只能插入一个表中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://xperblueray.com/2021/11/08/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97%E5%92%8C/" data-id="ckvv2v4890003twi4bwkv6zfl"
+         class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97%E5%92%8C/" rel="tag">最大子列和</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2021/11/11/Git%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            Git使用笔记
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/09/14/jar%E5%92%8Cwar%E7%9A%84%E8%BD%AC%E6%8D%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">jar和war的转换</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2021 星空</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="星空"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/snap.svg-min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
